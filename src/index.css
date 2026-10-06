@@ -253,9 +253,9 @@ a.brand-lockup:focus-visible, a.footer-logo:focus-visible { outline: 3px solid v
 .title-stamp {
   position: absolute;
   z-index: 2;
-  right: -0.56em;
-  top: -0.8em;
-  width: 1em;
+  right: -0.68em;
+  top: -0.94em;
+  width: 1.25em;
   text-shadow: none;
   transform-origin: 50% 40%;
   transform: rotate(10deg);
@@ -514,6 +514,66 @@ a.btn-poster, a.btn-mobile-pill { text-decoration: none; }
 .info-plate__arrow { color: var(--yellow); font-weight: 900; }
 .info-plate__title { font-family: var(--f-body); font-weight: 800; font-size: clamp(14px, 3.6vw, 20px); letter-spacing: 0.03em; }
 .info-plate__sub { font-size: 11.5px; font-weight: 600; color: #e6e6e8; }
+/* phones: "home screen" contact card with three big app icons */
+.app-dock { display: none; }
+@media (max-width: 599px) {
+  .info-plate--links { display: none; }
+  .app-dock {
+    display: block;
+    margin: 26px auto 0;
+    padding: 16px 14px 14px;
+    border-radius: 26px;
+    border: 3px solid #000;
+    background:
+      radial-gradient(120% 80% at 50% -10%, rgba(255, 194, 26, 0.18), transparent 60%),
+      linear-gradient(180deg, #2a2a30, #0d0d10);
+    box-shadow: 0 0 0 3px #fff, 0 0 0 6px #000, 0 14px 26px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    color: #fff;
+  }
+  .app-dock__head { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .app-dock__hi { font-family: var(--f-comic); font-size: 26px; line-height: 1; letter-spacing: 0.04em; color: var(--yellow); text-shadow: 2px 2px 0 #000; }
+  .app-dock__sub { font: 700 10.5px/1.2 var(--f-body); letter-spacing: 0.14em; text-transform: uppercase; color: #cfcfd4; }
+  .app-dock__row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+  .app-tile { display: flex; flex-direction: column; align-items: center; gap: 5px; min-width: 0; text-decoration: none; color: #fff; -webkit-tap-highlight-color: transparent; }
+  .app-tile__icon {
+    display: grid;
+    place-items: center;
+    width: min(68px, 19vw);
+    aspect-ratio: 1;
+    border-radius: 22%;
+    border: 2.5px solid #000;
+    box-shadow: 0 4px 0 #000, inset 0 2px 0 rgba(255, 255, 255, 0.35);
+    animation: app-hop 3.6s ease-in-out infinite;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .app-tile--wa .app-tile__icon { background: linear-gradient(160deg, #5af08a, #1fb455); }
+  .app-tile--ig .app-tile__icon { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 8%, #fd5949 45%, #d6249f 62%, #285aeb 100%); animation-delay: 0.3s; }
+  .app-tile--yt .app-tile__icon { background: linear-gradient(160deg, #ff4a4a, #d60000); animation-delay: 0.6s; }
+  .app-tile:active .app-tile__icon { transform: translateY(3px) scale(0.96); box-shadow: 0 1px 0 #000; }
+  .app-tile__glyph { width: 58%; height: 58%; display: block; }
+  .app-tile__name { font: 800 12.5px/1 var(--f-body); letter-spacing: 0.02em; }
+  .app-tile__note { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 600 10px/1 var(--f-body); color: var(--yellow); }
+  .app-dock__phone {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1.5px dashed rgba(255, 255, 255, 0.35);
+    font: 800 12px/1 var(--f-body);
+    letter-spacing: 0.06em;
+    color: #fff;
+    text-decoration: none;
+  }
+}
+/* icons take turns doing a little hop, like apps waiting to be opened */
+@keyframes app-hop {
+  0%, 70%, 100% { transform: translateY(0); }
+  76% { transform: translateY(-6px) rotate(-3deg); }
+  82% { transform: translateY(0); }
+  86% { transform: translateY(-2px); }
+}
+
 /* info bar with WhatsApp / Instagram / YouTube buttons */
 .info-plate--links { cursor: default; }
 @media (hover: hover) { .info-plate--links:hover { transform: none; } }
@@ -961,19 +1021,20 @@ a.btn-poster, a.btn-mobile-pill { text-decoration: none; }
   background: linear-gradient(to top, rgba(40, 0, 0, 0.55), rgba(40, 0, 0, 0));
   pointer-events: none;
 }
-.mob-dock-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 520px; margin: 0 auto; pointer-events: auto; }
+.mob-dock-inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; max-width: 520px; margin: 0 auto; pointer-events: auto; }
 .btn-mobile-pill {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 7px;
+  min-width: 0;
   min-height: 50px;
   padding: 6px 10px;
   border: 3px solid #000;
   border-radius: 999px;
   box-shadow: 0 4px 0 #000;
   font-family: var(--f-comic);
-  font-size: 14px;
+  font-size: clamp(11px, 3.5vw, 14px);
   line-height: 1;
   letter-spacing: 0.02em;
   white-space: nowrap;
@@ -984,8 +1045,10 @@ a.btn-poster, a.btn-mobile-pill { text-decoration: none; }
 .btn-mob-merchant { background: var(--white); color: var(--red-hot); }
 .mob-btn-icon-wrap { flex: none; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #000; color: var(--white); }
 .mob-btn-arrow { font: 900 13px/1 var(--f-body); }
+.mob-btn-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 @media (max-width: 400px) {
-  .btn-mobile-pill { font-size: 12px; gap: 5px; padding: 6px 8px; }
+  .btn-mobile-pill { gap: 5px; padding: 6px 7px; }
+  .mob-btn-icon-wrap { width: 22px; height: 22px; }
   .mob-btn-arrow { display: none; }
 }
 @media (min-width: 900px) { .pas-mobile-floating-bar { display: none; } }

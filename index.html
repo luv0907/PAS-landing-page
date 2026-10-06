@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  
+  <!-- Security Headers (Enterprise Large-Cap Hardening) -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
+  
+  <!-- Content Security Policy (Prevents XSS, Code Injection, Clickjacking) -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com data:;
+    img-src 'self' data: https: blob:;
+    connect-src 'self' http://localhost:* ws://localhost:* https://docs.google.com https://forms.gle;
+    frame-src 'self' https://docs.google.com https://forms.gle;
+    object-src 'none';
+    base-uri 'self';
+    form-action 'self' https://docs.google.com https://forms.gle;
+  ">
+
+  <title>PickAtStore — India's 1st Unified Retail BOPIS Platform | Hyderabad</title>
+  <meta name="description" content="Pick At Store is India's first Pre-Dine-In platform. Be among the first 1,000 people to experience it, or one of just 100 founding restaurants for our Hyderabad launch.">
+  <meta name="theme-color" content="#E3241B">
+  
+  <!-- OpenGraph / Social Metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Pick At Store — India's First Pre-Dine-In Platform | Hyderabad">
+  <meta property="og:description" content="Be among the first 1,000 Founding Pickstars, or one of just 100 founding restaurants for our Hyderabad launch.">
+  <meta property="og:image" content="/images/logo.png">
+  <meta property="og:url" content="https://www.pickatstore.io/">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PickAtStore — India's 1st Unified Retail BOPIS Platform">
+  <meta name="twitter:description" content="India's first Pre-Dine-In platform. Founding Pickstars access for the first 1,000 people.">
+  <meta name="twitter:image" content="/images/logo.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  <link rel="apple-touch-icon" href="/images/logo.png">
+  
+  <!-- Secure Google Fonts Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Londrina+Solid:wght@400;900&family=Luckiest+Guy&family=Montserrat:wght@500;600;700;800;900&family=Nunito:wght@800;900;1000&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800;6..12,900&display=swap" rel="stylesheet">
+
+  <!-- Schema.org Structured Data (JSON-LD for Large-Cap SEO & Authenticity) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "PickAtStore",
+    "legalName": "PAS Retail Networks PVT LTD",
+    "url": "https://www.pickatstore.io",
+    "logo": "https://www.pickatstore.io/images/logo.png",
+    "description": "India's first unified retail BOPIS (Buy Online, Pick Up In Store) platform.",
+    "telephone": "+91 7842287373",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Hyderabad",
+      "addressRegion": "Telangana",
+      "addressCountry": "IN"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { RESTAURANT_FORM_URL } from '../lib/links';
+import { RESTAURANT_REGISTER_URL, RESTAURANT_REGISTER_LABEL } from '../lib/links';
 
 
 /* Founding-restaurant perks, one short line each */
@@ -206,7 +206,7 @@ export default function MerchantAppSection() {
             </div>
 
             <div className="torn-cta">
-              <a className="btn-poster btn-poster--red" href={RESTAURANT_FORM_URL} target="_blank" rel="noopener noreferrer">
+              <a className="btn-poster btn-poster--red" href={RESTAURANT_REGISTER_URL} target="_blank" rel="noopener noreferrer" aria-label={RESTAURANT_REGISTER_LABEL}>
                 <span>REGISTER RESTAURANT</span>
                 <span className="btn-poster__icon">↗</span>
               </a>

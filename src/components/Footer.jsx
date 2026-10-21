@@ -1,5 +1,5 @@
 import React from 'react';
-import { CUSTOMER_FORM_URL, RESTAURANT_FORM_URL } from '../lib/links';
+import { CUSTOMER_FORM_URL, RESTAURANT_REGISTER_URL } from '../lib/links';
 
 
 const MAIN_SITE_URL = "https://www.pickatstore.io/";
@@ -43,7 +43,7 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a className="footer-link-btn" href={RESTAURANT_FORM_URL} target="_blank" rel="noopener noreferrer">
+                <a className="footer-link-btn" href={RESTAURANT_REGISTER_URL} target="_blank" rel="noopener noreferrer">
                   ★ Merchant Access (Restaurants)
                 </a>
               </li>

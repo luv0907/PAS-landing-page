@@ -3,7 +3,7 @@ import StampLayer from './StampLayer';
 import TopDecors from './TopDecors';
 import CharminarScene from './CharminarScene';
 import ContactPlate from './ContactPlate';
-import { CUSTOMER_FORM_URL, RESTAURANT_FORM_URL } from '../lib/links';
+import { CUSTOMER_FORM_URL, RESTAURANT_REGISTER_URL, RESTAURANT_REGISTER_LABEL } from '../lib/links';
 import WaxSeal from './WaxSeal';
 import PassDetailModal from './PassDetailModal';
 import useTypeCycle from '../lib/useTypeCycle';
@@ -309,11 +309,11 @@ export default function Hero() {
 
                 <a
                   className="btn-poster btn-poster--yellow"
-                  href={RESTAURANT_FORM_URL}
+                  href={RESTAURANT_REGISTER_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  aria-label="Register your restaurant on Google Forms"
+                  aria-label={RESTAURANT_REGISTER_LABEL}
                 >
                   <span>REGISTER RESTAURANT</span>
                   <span className="btn-poster__icon">↗</span>

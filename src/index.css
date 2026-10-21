@@ -2861,3 +2861,13 @@ html:not(.pas-loaded) .title-stamp, html:not(.pas-loaded) .wax-seal__banner, htm
   .title-words .title-line--store { font-size: 15.5vw; }
   .title-promise__text { font-size: 14px; }
 }
+
+.pass-modal__web-alt {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+  font: 700 13px/1.3 var(--f-body);
+  color: #333;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

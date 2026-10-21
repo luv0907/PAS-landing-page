@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { CUSTOMER_FORM_URL, RESTAURANT_FORM_URL } from '../lib/links';
+import { CUSTOMER_FORM_URL, RESTAURANT_FORM_URL, RESTAURANT_REGISTER_URL, PLATFORM } from '../lib/links';
 
 /**
  * Full-detail "pass" sheet that opens when a registration card in the hero
@@ -327,7 +327,7 @@ export default function PassDetailModal({ kind, origin, onClose, onRegister }) {
             <a
               id={`pass-modal-cta-${data.tone}`}
               className={`btn-poster ${data.tone === 'merchant' ? 'btn-poster--yellow' : 'btn-poster--red'} pass-modal__cta`}
-              href={data.tone === 'merchant' ? RESTAURANT_FORM_URL : CUSTOMER_FORM_URL}
+              href={data.tone === 'merchant' ? RESTAURANT_REGISTER_URL : CUSTOMER_FORM_URL}
               target="_blank"
               rel="noopener noreferrer"
               onClick={onRegister}
@@ -335,6 +335,11 @@ export default function PassDetailModal({ kind, origin, onClose, onRegister }) {
               <span>{data.cta}</span>
                 <span className="btn-poster__icon">↗</span>
             </a>
+            {data.tone === 'merchant' && PLATFORM !== 'desktop' && (
+              <a className="pass-modal__web-alt" href={RESTAURANT_FORM_URL} target="_blank" rel="noopener noreferrer">
+                No app? Register on the web instead
+              </a>
+            )}
           </div>
         </div>
 

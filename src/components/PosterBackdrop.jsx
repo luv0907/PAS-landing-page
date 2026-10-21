@@ -3,6 +3,9 @@ import { buildDoodleTile, buildCityFrame, buildTrim } from '../lib/posterBackdro
 
 const DOODLES = buildDoodleTile();
 
+// how fast the red doodle wall drifts relative to the page scroll
+const DOODLE_SPEED = 0.35;
+
 // doodle tile is drawn at 420px; shown a little smaller on phones
 const tileSize = () => (window.innerWidth < 640 ? 300 : 420);
 
@@ -22,16 +25,22 @@ export default function PosterBackdrop() {
   const trimRefs = useRef([]);
   const lastTrim = useRef(-1);
 
-  // old-city buildings stay put: they are a fixed frame and do NOT move
-  // with the page scroll. Strips sit at 0 and the scalloped trim is drawn once.
+  // old-city buildings stay put: they do NOT move with the page scroll.
   const placeStrips = () => {
     stripRefs.current.forEach((el) => {
       if (el) el.style.transform = 'none';
     });
+  };
+
+  // the white scalloped edge drifts at exactly the same speed as the
+  // red doodle wall behind it (DOODLE_SPEED), so the two move as one.
+  const moveTrim = () => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const { W, H } = dims.current;
-    if (W && lastTrim.current !== 0) {
-      lastTrim.current = 0;
-      const d = buildTrim(W, H, 0);
+    const phase = reduce ? 0 : Math.round(window.scrollY * DOODLE_SPEED * 2) / 2;
+    if (W && phase !== lastTrim.current) {
+      lastTrim.current = phase;
+      const d = buildTrim(W, H, phase);
       trimRefs.current.forEach((t) => t && t.setAttribute('d', d));
     }
   };
@@ -64,6 +73,7 @@ export default function PosterBackdrop() {
       trimRefs.current = [...host.querySelectorAll('.cf-trim')];
       lastTrim.current = -1;
       placeStrips();
+      moveTrim();
     };
     draw();
     const ro = new ResizeObserver(() => {
@@ -94,8 +104,9 @@ export default function PosterBackdrop() {
     const onScroll = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        const y = (window.scrollY * 0.35) % tile;
+        const y = (window.scrollY * DOODLE_SPEED) % tile;
         el.style.transform = `translate3d(0, ${-y}px, 0)`;
+        moveTrim();
       });
     };
     const onResize = () => {

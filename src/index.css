@@ -2757,3 +2757,79 @@ html:not(.pas-loaded) .title-stamp, html:not(.pas-loaded) .wax-seal__banner, htm
 .type-slot { padding-right: 0.14em; }
 @media (max-width: 619px) { .title-promise__text { max-width: calc(100vw - 40px); } }
 .title-promise { position: relative; z-index: 3; }
+
+/* =====================================================================
+   Phones: restaurant perks, one card at a time
+   ===================================================================== */
+.perk-nav { display: none; }
+@media (max-width: 759px) {
+  .perk-grid {
+    display: flex;
+    gap: 0;
+    margin: 16px -4px 0;
+    padding: 14px 0 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+  .perk-grid::-webkit-scrollbar { display: none; }
+  .perk-tile {
+    flex: 0 0 100%;
+    box-sizing: border-box;
+    scroll-snap-align: center;
+    margin: 0;
+    padding: 22px 18px 18px;
+    gap: 6px;
+    transform: none;
+    border: 2.5px solid #111;
+    box-shadow: none;
+    border-radius: 16px;
+  }
+  .perk-tile + .perk-tile { margin-left: 0; }
+  .perk-grid { gap: 0; }
+  .perk-tile { width: calc(100% - 8px); margin: 0 4px; flex-basis: calc(100% - 8px); }
+  .perk-tile::before { top: -9px; width: 48px; height: 14px; margin-left: -24px; }
+  .perk-tile__icon { width: 52px; height: 52px; }
+  .perk-tile__title { font-size: 20px; }
+  .perk-tile__note { font-size: 13px; }
+  .perk-tile__worth { font-size: 16px; margin-top: 6px; }
+  .perk-tile__stamp { top: 10px; right: 10px; font-size: 13px; padding: 4px 8px 3px; }
+
+  .perk-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 6px;
+  }
+  .perk-nav__btn {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 2.5px solid #111;
+    border-radius: 50%;
+    background: #fff;
+    color: #111;
+    font: 900 16px/1 var(--f-body);
+    box-shadow: 2px 2px 0 #111;
+    cursor: pointer;
+  }
+  .perk-nav__btn:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 #111; }
+  .perk-nav__dots { display: flex; gap: 6px; }
+  .perk-nav__dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 1.5px solid #111;
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+    transition: width 0.25s ease, background 0.25s ease;
+  }
+  .perk-nav__dot.is-active { width: 22px; background: var(--red-hot); }
+  .perk-nav__count { font: 800 12px/1 var(--f-body); color: #555; min-width: 26px; text-align: center; }
+  .perk-nav__btn:focus-visible, .perk-nav__dot:focus-visible { outline: 3px solid var(--red-hot); outline-offset: 2px; }
+}

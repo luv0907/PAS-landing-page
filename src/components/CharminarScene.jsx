@@ -376,7 +376,8 @@ export default function CharminarScene() {
         <image href="/images/landmarks/charminar.webp" x="361" y="92" width="278" height="400" preserveAspectRatio="xMidYMax meet" className="scene-charminar" />
 
 
-        {/* ribbon banner with the stage name, above the minarets */}
+        {/* ribbon banner with the stage name, above the minarets (scaled up) */}
+        <g transform="translate(500 72) scale(1.25) translate(-500 -72)">
         <g stroke={INK} strokeWidth="1.6" strokeLinejoin="round" className="scene-ribbon">
           <path d="M248 50 L206 58 L222 72 L206 90 L248 84 Z" fill={YEL} />
           <path d="M248 50 L206 58 L222 72 L206 90 L248 84 Z" fill="url(#skHatchLight)" />
@@ -386,9 +387,10 @@ export default function CharminarScene() {
           <path d="M248 50 Q500 10 752 50 L752 84 Q500 44 248 84 Z" fill={RED} />
           <path d="M252 80 Q500 40 748 80 L748 84 Q500 44 252 84 Z" fill="url(#skHatch)" stroke="none" />
         </g>
-        <text className="scene-ribbon-text" fontSize="26" textAnchor="middle" letterSpacing="3">
+        <text className="scene-ribbon-text" fontSize="28" textAnchor="middle" letterSpacing="3">
           <textPath href="#ribbonTextPath" startOffset="50%">PICK AT STORE</textPath>
         </text>
+        </g>
 
         {/* steps / platform */}
         <g filter="url(#skRough)" stroke={INK} strokeLinejoin="round">

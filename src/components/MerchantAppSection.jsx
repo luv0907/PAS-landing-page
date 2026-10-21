@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { RESTAURANT_FORM_URL } from '../lib/links';
 
 
@@ -82,6 +82,59 @@ const TOTAL = PERKS.reduce((n, p) => n + p.worth, 0);
 const inr = (n) => `₹${n.toLocaleString('en-IN')}`;
 
 export default function MerchantAppSection() {
+  // phones: perks show one card at a time (swipe, arrows or dots; auto-plays until touched)
+  const trackRef = useRef(null);
+  const [active, setActive] = useState(0);
+  const paused = useRef(false);
+
+  const goTo = (i) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const n = PERKS.length;
+    const idx = (i + n) % n;
+    const card = track.children[idx];
+    if (card) track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return undefined;
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const w = track.clientWidth || 1;
+        setActive(Math.round(track.scrollLeft / w));
+      });
+    };
+    const stop = () => { paused.current = true; };
+    track.addEventListener('scroll', onScroll, { passive: true });
+    track.addEventListener('pointerdown', stop, { passive: true });
+    track.addEventListener('touchstart', stop, { passive: true });
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const phone = window.matchMedia('(max-width: 759px)');
+    let visible = false;
+    const io = 'IntersectionObserver' in window
+      ? new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0.5 })
+      : null;
+    if (io) io.observe(track);
+    const id = reduce ? 0 : setInterval(() => {
+      if (paused.current || !visible || !phone.matches) return;
+      const w = track.clientWidth || 1;
+      goTo(Math.round(track.scrollLeft / w) + 1);
+    }, 3200);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearInterval(id);
+      if (io) io.disconnect();
+      track.removeEventListener('scroll', onScroll);
+      track.removeEventListener('pointerdown', stop);
+      track.removeEventListener('touchstart', stop);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const step = (d) => () => { paused.current = true; goTo(active + d); };
 
   return (
     <section className="lineup-section" id="merchant-app">
@@ -108,7 +161,7 @@ export default function MerchantAppSection() {
             <p className="torn-lead">
               <strong>100 restaurants</strong> only. Everything below is free.
             </p>
-            <ul className="perk-grid">
+            <ul className="perk-grid" ref={trackRef} aria-label="Founding restaurant benefits">
               {PERKS.map((p, i) => (
                 <li key={p.title} className="perk-tile" style={{ '--r': `${[-2, 1.5, -1, 2, -1.5, 1][i]}deg` }}>
                   <span className="perk-tile__stamp">FREE</span>
@@ -121,6 +174,24 @@ export default function MerchantAppSection() {
                 </li>
               ))}
             </ul>
+
+            <div className="perk-nav" aria-label="Browse benefits">
+              <button type="button" className="perk-nav__btn" onClick={step(-1)} aria-label="Previous benefit">←</button>
+              <div className="perk-nav__dots">
+                {PERKS.map((p, i) => (
+                  <button
+                    key={p.title}
+                    type="button"
+                    className={`perk-nav__dot${i === active ? ' is-active' : ''}`}
+                    onClick={() => { paused.current = true; goTo(i); }}
+                    aria-label={`Show ${p.title}`}
+                    aria-current={i === active ? 'true' : undefined}
+                  />
+                ))}
+              </div>
+              <span className="perk-nav__count" aria-hidden="true">{active + 1}/{PERKS.length}</span>
+              <button type="button" className="perk-nav__btn" onClick={step(1)} aria-label="Next benefit">→</button>
+            </div>
 
             <div className="torn-total" aria-label={`Total worth ${inr(TOTAL)}, you pay nothing`}>
               <span className="torn-total__worth">

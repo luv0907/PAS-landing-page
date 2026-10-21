@@ -6,8 +6,9 @@ import { RESTAURANT_FORM_URL } from '../lib/links';
 const STROKE = { stroke: '#000', strokeWidth: 2.6, strokeLinecap: 'round', strokeLinejoin: 'round' };
 const PERKS = [
   {
-    title: 'Launch Video & Reels',
-    line: 'Premium video + influencer reel',
+    title: 'Launch Video & Reel',
+    worth: 50000,
+    note: 'Pro film + influencer reel',
     icon: (
       <>
         <rect x="6" y="14" width="26" height="20" rx="4" fill="#ff3b2f" {...STROKE} />
@@ -17,19 +18,32 @@ const PERKS = [
     ),
   },
   {
-    title: 'Founding 100 Badge',
-    line: 'Certificate, badge & the Wall',
+    title: 'Social Media Support',
+    worth: 20000,
+    note: 'A month of posts & a campaign',
     icon: (
       <>
-        <path d="M17 28 L13 44 L19 40 L22 46 L24 30 M31 28 L35 44 L29 40 L26 46 L24 30" fill="#ff3b2f" {...STROKE} />
-        <circle cx="24" cy="18" r="13" fill="#ffc21a" {...STROKE} />
-        <text x="24" y="22" textAnchor="middle" fontSize="11" fontWeight="900" fontFamily="sans-serif">100</text>
+        <path d="M4 22 L14 14 L24 20 L34 14 L44 22 L34 34 L24 40 L14 34 Z" fill="#ffc21a" {...STROKE} />
+        <path d="M14 26 L22 33 M19 23 L27 30 M24 20 L31 26" fill="none" {...STROKE} />
       </>
     ),
   },
   {
-    title: 'First In Line',
-    line: 'Early features & launch events',
+    title: 'Top Visibility',
+    worth: 15000,
+    note: 'Priority listing in the app',
+    icon: (
+      <>
+        <path d="M14 28 L17 40 H22 L20 29" fill="#fff" {...STROKE} />
+        <path d="M6 20 H14 L32 10 V38 L14 28 H6 Z" fill="#ffc21a" {...STROKE} />
+        <path d="M37 18 Q41 24 37 30 M41 13 Q48 24 41 35" fill="none" {...STROKE} />
+      </>
+    ),
+  },
+  {
+    title: 'Onboarding & Launch',
+    worth: 24000,
+    note: 'Setup + offline promotion',
     icon: (
       <>
         <path d="M20 36 Q24 47 28 36" fill="#ff7a1a" {...STROKE} />
@@ -40,29 +54,9 @@ const PERKS = [
     ),
   },
   {
-    title: 'Top Visibility',
-    line: 'Priority listing & campaigns',
-    icon: (
-      <>
-        <path d="M14 28 L17 40 H22 L20 29" fill="#fff" {...STROKE} />
-        <path d="M6 20 H14 L32 10 V38 L14 28 H6 Z" fill="#ffc21a" {...STROKE} />
-        <path d="M37 18 Q41 24 37 30 M41 13 Q48 24 41 35" fill="none" {...STROKE} />
-      </>
-    ),
-  },
-  {
-    title: 'Launch Support',
-    line: 'Onboarding & offline marketing',
-    icon: (
-      <>
-        <path d="M4 22 L14 14 L24 20 L34 14 L44 22 L34 34 L24 40 L14 34 Z" fill="#ffc21a" {...STROKE} />
-        <path d="M14 26 L22 33 M19 23 L27 30 M24 20 L31 26" fill="none" {...STROKE} />
-      </>
-    ),
-  },
-  {
     title: 'In-Store QR Kit',
-    line: 'Counter display & stickers',
+    worth: 11000,
+    note: 'Counter display & stickers',
     icon: (
       <>
         <rect x="9" y="4" width="30" height="34" rx="3" fill="#fff" {...STROKE} />
@@ -71,7 +65,21 @@ const PERKS = [
       </>
     ),
   },
+  {
+    title: 'Founding 100 Badge',
+    worth: 0,
+    note: 'Certificate, badge & the Wall',
+    icon: (
+      <>
+        <path d="M17 28 L13 44 L19 40 L22 46 L24 30 M31 28 L35 44 L29 40 L26 46 L24 30" fill="#ff3b2f" {...STROKE} />
+        <circle cx="24" cy="18" r="13" fill="#ffc21a" {...STROKE} />
+        <text x="24" y="22" textAnchor="middle" fontSize="11" fontWeight="900" fontFamily="sans-serif">100</text>
+      </>
+    ),
+  },
 ];
+const TOTAL = PERKS.reduce((n, p) => n + p.worth, 0);
+const inr = (n) => `₹${n.toLocaleString('en-IN')}`;
 
 export default function MerchantAppSection() {
 
@@ -96,19 +104,35 @@ export default function MerchantAppSection() {
             <span className="torn-tape torn-tape--l" aria-hidden="true" />
             <span className="torn-tape torn-tape--r" aria-hidden="true" />
 
+            <div className="torn-eyebrow">WHAT YOU GET AS A FOUNDING RESTAURANT</div>
             <p className="torn-lead">
               <strong>100 restaurants</strong> only. Everything below is free.
             </p>
-
-            <div className="torn-eyebrow">WHAT YOU GET AS A FOUNDING RESTAURANT</div>
             <ul className="perk-grid">
               {PERKS.map((p, i) => (
                 <li key={p.title} className="perk-tile" style={{ '--r': `${[-2, 1.5, -1, 2, -1.5, 1][i]}deg` }}>
+                  <span className="perk-tile__stamp">FREE</span>
                   <svg viewBox="0 0 48 48" className="perk-tile__icon" aria-hidden="true">{p.icon}</svg>
                   <span className="perk-tile__title">{p.title}</span>
+                  <span className="perk-tile__note">{p.note}</span>
+                  <span className="perk-tile__worth">
+                    {p.worth ? <><span className="sr-only">Usually </span><s>{inr(p.worth)}</s></> : <em>Founding bonus</em>}
+                  </span>
                 </li>
               ))}
             </ul>
+
+            <div className="torn-total" aria-label={`Total worth ${inr(TOTAL)}, you pay nothing`}>
+              <span className="torn-total__worth">
+                <small>Total worth</small>
+                <s>{inr(TOTAL)}</s>
+              </span>
+              <span className="torn-total__arrow" aria-hidden="true">→</span>
+              <span className="torn-total__pay">
+                <small>You pay</small>
+                <strong>₹0</strong>
+              </span>
+            </div>
 
             <div className="torn-cta">
               <a className="btn-poster btn-poster--red" href={RESTAURANT_FORM_URL} target="_blank" rel="noopener noreferrer">

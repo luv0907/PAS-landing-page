@@ -6,9 +6,19 @@ import ContactPlate from './ContactPlate';
 import { CUSTOMER_FORM_URL, RESTAURANT_FORM_URL } from '../lib/links';
 import WaxSeal from './WaxSeal';
 import PassDetailModal from './PassDetailModal';
+import useTypeCycle from '../lib/useTypeCycle';
+
+/* the hero title types each founding group in turn */
+const AUDIENCES = [
+  { word: 'PICK STARS', banner: 'BE AMONG THE FIRST 1,000', promise: <>Early access, rewards &amp; food experiences. <b>Free.</b></>, badge: '1000 ONLY', long: false },
+  { word: 'RESTAURANTS', banner: 'ONLY 100 RESTAURANTS', promise: <>₹1,20,000 of launch support. <b>Free.</b></>, badge: '100 ONLY', long: true },
+];
+const WORDS = AUDIENCES.map((a) => a.word);
 
 
 export default function Hero() {
+  const { index: who, text: typed, typing } = useTypeCycle(WORDS);
+  const aud = AUDIENCES[who];
   // phones show one pass at a time, switched with the toggle above it
   const [pass, setPass] = useState('customer');
   const [thud, setThud] = useState(false);
@@ -130,15 +140,17 @@ export default function Hero() {
           </div>
 
           <div className="title-assembly">
-            <div className="title-banner">
-              <span>BE AMONG THE FIRST 1,000</span>
+            <div className="title-banner" aria-hidden="true">
+              <span key={aud.banner} className="title-banner__text">{aud.banner}</span>
             </div>
 
             <div className={`title-block${thud ? ' is-thud' : ''}`}>
               <h1 className="title-words">
-                <span className="title-line title-line--pickat drop-head">FOUNDING</span>
-                <span className="title-line title-line--store drop-head" style={{ '--d': '140ms' }}>
-                  PICK STARS
+                <span className="sr-only">Founding Pick Stars and Founding Restaurants</span>
+                <span className="title-line title-line--pickat drop-head" aria-hidden="true">FOUNDING</span>
+                <span className="title-line title-line--store drop-head" style={{ '--d': '140ms' }} aria-hidden="true">
+                  <span className={`type-word${aud.long ? ' type-word--long' : ''}`}>{typed || '\u200b'}</span>
+                  <span className={`type-caret${typing ? ' is-typing' : ''}`} />
                   {/* wax seal stamped onto the top-right corner of the final S */}
                   <span
                     key={stampRun}
@@ -152,9 +164,12 @@ export default function Hero() {
                 </span>
               </h1>
             </div>
+            <p className="title-promise" aria-live="off">
+              <span key={who} className="title-promise__text">{aud.promise}</span>
+            </p>
           </div>
 
-          <div className="side-badge side-badge--right" aria-label="Just 100 restaurants in Hyderabad">
+          <div className="side-badge side-badge--right" aria-label="1,000 customers and 100 restaurants only, Hyderabad">
             <svg viewBox="0 0 80 80" className="side-badge__icon" aria-hidden="true">
               <rect x="14" y="18" width="52" height="50" rx="8" fill="#fff" stroke="#000" strokeWidth="4.5" />
               <path d="M14 34 V26 a8 8 0 0 1 8 -8 h36 a8 8 0 0 1 8 8 v8 Z" fill="#ff3b2f" stroke="#000" strokeWidth="4" />
@@ -170,7 +185,7 @@ export default function Hero() {
               <circle cx="58" cy="60" r="11" fill="#ffc21a" stroke="#000" strokeWidth="3.5" />
               <path d="M58 54 V60 L62 62" stroke="#000" strokeWidth="3" strokeLinecap="round" fill="none" />
             </svg>
-            <span className="side-badge__big">1000 ONLY</span>
+            <span className="side-badge__big">{aud.badge}</span>
             <span className="side-badge__small">HYDERABAD</span>
           </div>
         </div>

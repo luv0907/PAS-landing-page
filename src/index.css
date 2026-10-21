@@ -2833,3 +2833,31 @@ html:not(.pas-loaded) .title-stamp, html:not(.pas-loaded) .wax-seal__banner, htm
   .perk-nav__count { font: 800 12px/1 var(--f-body); color: #555; min-width: 26px; text-align: center; }
   .perk-nav__btn:focus-visible, .perk-nav__dot:focus-visible { outline: 3px solid var(--red-hot); outline-offset: 2px; }
 }
+
+/* =====================================================================
+   PHONES: bigger, easier-to-read hero (tuned on a real 360–414px screen)
+   ===================================================================== */
+@media (max-width: 619px) {
+  .register-cue__badge--top { font-size: 12px; padding: 8px 16px 7px; letter-spacing: 0.14em; }
+  .title-banner span { font-size: 17px; padding: 6px 14px 4px; }
+  .title-words .title-line--pickat { font-size: 15vw; }
+  .title-words .title-line--store { font-size: 16.5vw; }
+  .type-word--long { font-size: 0.84em; }
+  .title-stamp { right: -0.42em; top: -0.82em; width: 0.95em; }
+  .title-promise__text { font-size: 15px; padding: 9px 16px 8px; }
+  .side-badge__big { font-size: 27px; }
+  .side-badge__small { font-size: 15px; }
+  .side-badge__icon { width: 54px; }
+
+  .register-cue__line { font-size: 16px; }
+  .pass-card .pass-tag { font-size: 10.5px; }
+  .pass-card .pass-num { font-size: 66px; }
+  .pass-card .pass-title { font-size: 24px; }
+  .pass-card .pass-sub { font-size: 14px; }
+  .pass-more { font-size: 12.5px; }
+  .btn-poster { min-height: 54px; font-size: 18px; }
+}
+@media (max-width: 360px) {
+  .title-words .title-line--store { font-size: 15.5vw; }
+  .title-promise__text { font-size: 14px; }
+}

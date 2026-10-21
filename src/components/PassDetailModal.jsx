@@ -121,8 +121,41 @@ function SavingsSheet({ data }) {
   let row = 0;
   const lo = useCountUp(data.totalMin);
   const hi = useCountUp(data.totalMax);
+  const [tab, setTab] = useState('savings');
+  const [open, setOpen] = useState(() => new Set());
+  const rowsCount = data.sections.reduce((n, sec) => n + sec.rows.length, 0);
+  const extrasCount = data.extras.reduce((n, g) => n + g.items.length, 0);
+  const toggle = (i) => setOpen((prev) => {
+    const next = new Set(prev);
+    if (next.has(i)) next.delete(i); else next.add(i);
+    return next;
+  });
   return (
-    <>
+    <div className={`save-panels is-${tab}`}>
+      {/* phones only: the deal in one glance */}
+      <div className="save-summary" aria-hidden="true">
+        <div className="save-summary__worth">
+          <span>Worth</span>
+          <strong>{inr(lo)}–{inr(hi).slice(1)}</strong>
+        </div>
+        <span className="save-summary__arrow">→</span>
+        <div className="save-summary__pay">
+          <span>You pay</span>
+          <strong>{inr(data.fee)}</strong>
+        </div>
+        <p className="save-summary__note">One-time onboarding. Everything else is free.</p>
+      </div>
+
+      {/* phones only: switch between the price list and the extras */}
+      <div className="save-tabs" role="tablist" aria-label="Founding restaurant benefits">
+        <button type="button" role="tab" id="save-tab-savings" aria-selected={tab === 'savings'} className={tab === 'savings' ? 'is-active' : ''} onClick={() => setTab('savings')}>
+          Savings <span className="save-tabs__count">{rowsCount}</span>
+        </button>
+        <button type="button" role="tab" id="save-tab-extras" aria-selected={tab === 'extras'} className={tab === 'extras' ? 'is-active' : ''} onClick={() => setTab('extras')}>
+          Also free <span className="save-tabs__count">{extrasCount}</span>
+        </button>
+      </div>
+
       <section className="save-sheet" aria-label="Merchant savings sheet">
         <header className="save-sheet__bar">
           <span><span className="save-sheet__bar-star" aria-hidden="true">★</span> {data.title}</span>
@@ -142,7 +175,15 @@ function SavingsSheet({ data }) {
               {sec.rows.map((r) => {
                 const i = row++;
                 return (
-                  <li key={r.title} className={`save-row${r.pay ? ' save-row--pay' : ''}`} style={{ '--i': i }}>
+                  <li
+                    key={r.title}
+                    className={`save-row${r.pay ? ' save-row--pay' : ''}${open.has(i) ? ' is-open' : ''}`}
+                    style={{ '--i': i }}
+                    onClick={() => toggle(i)}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(i); } }}
+                    tabIndex={0}
+                    aria-expanded={open.has(i)}
+                  >
                     <span className="save-row__star" aria-hidden="true">★</span>
                     <div className="save-row__text">
                       <strong className="save-row__title">{r.title}</strong>
@@ -195,7 +236,7 @@ function SavingsSheet({ data }) {
           ))}
         </div>
       </section>
-    </>
+    </div>
   );
 }
 
@@ -211,12 +252,14 @@ export default function PassDetailModal({ kind, origin, onClose, onRegister }) {
     lastFocus.current = document.activeElement;
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('pm-open');
     const t = setTimeout(() => closeBtn.current && closeBtn.current.focus(), 60);
     const onKey = (e) => { if (e.key === 'Escape') requestClose(); };
     window.addEventListener('keydown', onKey);
     return () => {
       clearTimeout(t);
       document.body.style.overflow = prev;
+      document.body.classList.remove('pm-open');
       window.removeEventListener('keydown', onKey);
       if (lastFocus.current && lastFocus.current.focus) lastFocus.current.focus();
     };
@@ -289,18 +332,20 @@ export default function PassDetailModal({ kind, origin, onClose, onRegister }) {
           </ul>
           )}
 
-          <a
-            id={`pass-modal-cta-${data.tone}`}
-            className={`btn-poster ${data.tone === 'merchant' ? 'btn-poster--yellow' : 'btn-poster--red'} pass-modal__cta`}
-            href={data.tone === 'merchant' ? RESTAURANT_FORM_URL : CUSTOMER_FORM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={onRegister}
-          >
-            <span>{data.cta}</span>
-            {data.fee && <span className="pass-modal__cta-fee">{data.fee}</span>}
-            <span className="btn-poster__icon">↗</span>
-          </a>
+          <div className="pass-modal__cta-wrap">
+            <a
+              id={`pass-modal-cta-${data.tone}`}
+              className={`btn-poster ${data.tone === 'merchant' ? 'btn-poster--yellow' : 'btn-poster--red'} pass-modal__cta`}
+              href={data.tone === 'merchant' ? RESTAURANT_FORM_URL : CUSTOMER_FORM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={onRegister}
+            >
+              <span>{data.cta}</span>
+              {data.fee && <span className="pass-modal__cta-fee">{data.fee}</span>}
+              <span className="btn-poster__icon">↗</span>
+            </a>
+          </div>
         </div>
 
         <div className="pass-stub pass-modal__stub" aria-hidden="true">

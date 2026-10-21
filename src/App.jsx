@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PosterBackdrop from './components/PosterBackdrop';
 import CityRoute from './components/map/CityRoute';
 import MapStop from './components/map/MapStop';
@@ -18,6 +18,16 @@ import { CUSTOMER_FORM_URL, RESTAURANT_FORM_URL } from './lib/links';
 export default function App() {
   useReveal();
   useDropHeads();
+
+  // phones: tuck the floating dock away once the footer is on screen
+  const [footerInView, setFooterInView] = useState(false);
+  useEffect(() => {
+    const footer = document.getElementById('siteFooter');
+    if (!footer || !('IntersectionObserver' in window)) return undefined;
+    const io = new IntersectionObserver(([e]) => setFooterInView(e.isIntersecting), { rootMargin: '0px 0px -40px 0px' });
+    io.observe(footer);
+    return () => io.disconnect();
+  }, []);
 
   return (
     <div className="pas-app-root">
@@ -47,7 +57,7 @@ export default function App() {
       <Footer />
 
       {/* Mobile floating dock */}
-      <aside className="pas-mobile-floating-bar" aria-label="Mobile Quick Registration">
+      <aside className={`pas-mobile-floating-bar${footerInView ? ' is-tucked' : ''}`} aria-label="Mobile Quick Registration">
         <div className="mob-dock-inner">
           <a
             className="btn-mobile-pill btn-mob-customer"
@@ -62,7 +72,7 @@ export default function App() {
                 <circle cx="12" cy="7" r="4" />
               </svg>
             </span>
-            <span className="mob-btn-label">Customer Access</span>
+            <span className="mob-btn-label">Customer</span>
             <span className="mob-btn-arrow" aria-hidden="true">↗</span>
           </a>
 
@@ -80,7 +90,7 @@ export default function App() {
                 <path d="M9 22V12h6v10" />
               </svg>
             </span>
-            <span className="mob-btn-label">Merchant Access</span>
+            <span className="mob-btn-label">Restaurant</span>
             <span className="mob-btn-arrow" aria-hidden="true">↗</span>
           </a>
         </div>

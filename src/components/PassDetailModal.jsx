@@ -18,41 +18,39 @@ export const PASS_DETAILS = {
     num: '100',
     title: 'FOUNDING RESTAURANTS',
     sub: 'Just 100 restaurants for our first Hyderabad launch. Be one of the first building the future of pickup.',
-    fee: '₹2,999',
     listHeading: 'What you get as a founding restaurant:',
     savings: {
       title: 'MERCHANT SAVINGS SHEET',
       rates: 'HYD · 2026 RATES',
-      totalMin: 35000,
-      totalMax: 40000,
-      fee: 2999,
+      totalMin: 120000,
+      totalMax: 120000,
       sections: [
         {
           name: 'Marketing',
           rows: [
-            { title: 'Premium restaurant video', desc: 'Professionally shot & edited film of your food and space.', min: 9000, max: 10000 },
-            { title: 'Local influencer reel', desc: 'A Hyderabad food creator visits and posts a reel.', min: 6000, max: 7000 },
-            { title: 'Social media & marketing support', desc: 'Posts, captions and a launch campaign for a month.', min: 6000, max: 7000 },
+            { title: 'Premium restaurant video', desc: 'Professionally shot & edited film of your food and space.', min: 30000, max: 30000 },
+            { title: 'Local influencer reel', desc: 'A Hyderabad food creator visits and posts a reel.', min: 20000, max: 20000 },
+            { title: 'Social media & marketing support', desc: 'Posts, captions and a launch campaign for a month.', min: 20000, max: 20000 },
           ],
         },
         {
           name: 'Visibility',
           rows: [
-            { title: 'Priority listing & featured campaigns', desc: 'Top placement in the app and launch campaigns.', min: 4000, max: 4500 },
+            { title: 'Priority listing & featured campaigns', desc: 'Top placement in the app and launch campaigns.', min: 15000, max: 15000 },
           ],
         },
         {
           name: 'Launch Support',
           rows: [
-            { title: 'Dedicated onboarding', desc: 'We set up your menu, staff and pickup flow.', min: 5000, max: 5500, pay: 2999 },
-            { title: 'Offline launch marketing', desc: 'Flyers and on-ground promotion near your store.', min: 3000, max: 3500 },
+            { title: 'Dedicated onboarding', desc: 'We set up your menu, staff and pickup flow.', min: 12000, max: 12000 },
+            { title: 'Offline launch marketing', desc: 'Flyers and on-ground promotion near your store.', min: 12000, max: 12000 },
           ],
         },
         {
           name: 'In-Store Kit',
           rows: [
-            { title: 'Counter display & QR kit', desc: 'Printed standee with your ordering QR code.', min: 1200, max: 1500 },
-            { title: 'Premium window stickers', desc: 'Founding 100 window & door branding.', min: 800, max: 1000 },
+            { title: 'Counter display & QR kit', desc: 'Printed standee with your ordering QR code.', min: 6000, max: 6000 },
+            { title: 'Premium window stickers', desc: 'Founding 100 window & door branding.', min: 5000, max: 5000 },
           ],
         },
       ],
@@ -119,7 +117,6 @@ function useCountUp(target, delay = 900, duration = 1300) {
 
 function SavingsSheet({ data }) {
   let row = 0;
-  const lo = useCountUp(data.totalMin);
   const hi = useCountUp(data.totalMax);
   const [tab, setTab] = useState('savings');
   const [open, setOpen] = useState(() => new Set());
@@ -136,14 +133,14 @@ function SavingsSheet({ data }) {
       <div className="save-summary" aria-hidden="true">
         <div className="save-summary__worth">
           <span>Worth</span>
-          <strong>{inr(lo)}–{inr(hi).slice(1)}</strong>
+          <strong>{inr(hi)}</strong>
         </div>
         <span className="save-summary__arrow">→</span>
         <div className="save-summary__pay">
           <span>You pay</span>
-          <strong>{inr(data.fee)}</strong>
+          <strong>FREE</strong>
         </div>
-        <p className="save-summary__note">One-time onboarding. Everything else is free.</p>
+        <p className="save-summary__note">Every benefit below is free for the 100 founding restaurants.</p>
       </div>
 
       {/* phones only: switch between the price list and the extras */}
@@ -177,7 +174,7 @@ function SavingsSheet({ data }) {
                 return (
                   <li
                     key={r.title}
-                    className={`save-row${r.pay ? ' save-row--pay' : ''}${open.has(i) ? ' is-open' : ''}`}
+                    className={`save-row${open.has(i) ? ' is-open' : ''}`}
                     style={{ '--i': i }}
                     onClick={() => toggle(i)}
                     onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(i); } }}
@@ -192,15 +189,9 @@ function SavingsSheet({ data }) {
                     <span className="save-row__price">
                       <span className="save-row__was" aria-hidden="true">Elsewhere</span>
                       <span className="sr-only">Usually </span>
-                      <s>{inr(r.min)}–{inr(r.max).slice(1)}</s>
+                      <s>{r.min === r.max ? inr(r.min) : `${inr(r.min)}–${inr(r.max).slice(1)}`}</s>
                     </span>
-                    {r.pay ? (
-                      <span className="save-row__free save-row__free--pay">
-                        {inr(r.pay)}<small>one-time</small>
-                      </span>
-                    ) : (
-                      <span className="save-row__free">FREE</span>
-                    )}
+                    <span className="save-row__free">FREE</span>
                   </li>
                 );
               })}
@@ -210,13 +201,13 @@ function SavingsSheet({ data }) {
 
         <footer className="save-sheet__total">
           <span className="save-sheet__total-label">Total value</span>
-          <span className="save-sheet__total-num" aria-label={`${inr(data.totalMin)} to ${inr(data.totalMax)}`}>
-            {inr(lo)}–{inr(hi).slice(1)}
+          <span className="save-sheet__total-num" aria-label={inr(data.totalMax)}>
+            {inr(hi)}
           </span>
           <div className="save-sheet__pay">
-            <span>You pay only</span>
-            <strong>{inr(data.fee)}</strong>
-            <em>one-time onboarding · everything else free</em>
+            <span>You pay</span>
+            <strong>₹0</strong>
+            <em>Free for all 100 founding restaurants</em>
           </div>
         </footer>
       </section>
@@ -342,8 +333,7 @@ export default function PassDetailModal({ kind, origin, onClose, onRegister }) {
               onClick={onRegister}
             >
               <span>{data.cta}</span>
-              {data.fee && <span className="pass-modal__cta-fee">{data.fee}</span>}
-              <span className="btn-poster__icon">↗</span>
+                <span className="btn-poster__icon">↗</span>
             </a>
           </div>
         </div>

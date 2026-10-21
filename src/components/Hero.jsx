@@ -37,7 +37,7 @@ export default function Hero() {
         if (cancelled || !el || window.scrollY > 80) return;
         const top = el.getBoundingClientRect().top + window.scrollY - 12;
         window.scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
-      }, reduce ? 300 : 2100);
+      }, reduce ? 300 : 1500);
     };
     if (document.documentElement.classList.contains('pas-loaded')) go();
     else window.addEventListener('pas:loaded', go, { once: true });
@@ -181,6 +181,11 @@ export default function Hero() {
           <div className="register-cue" id="register" ref={registerRef}>
             <span className="register-cue__badge"><span className="register-cue__dot" aria-hidden="true" />Registrations open</span>
             <p className="register-cue__line">Register now for founding access. Only <strong>1,000 customers</strong> and <strong>100 restaurants</strong>.</p>
+            <ol className="register-steps" aria-label="How to register">
+              <li><b>1</b> Pick your pass</li>
+              <li><b>2</b> Fill the short form</li>
+              <li><b>3</b> Get founding perks</li>
+            </ol>
           </div>
           <div className="pass-switch" role="tablist" aria-label="Choose your pass">
             <button

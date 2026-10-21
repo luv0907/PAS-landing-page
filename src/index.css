@@ -2289,33 +2289,6 @@ html:not(.pas-loaded) .title-stamp, html:not(.pas-loaded) .wax-seal__banner, htm
   .pass-modal__groups--simple { gap: 10px; }
 }
 
-/* =====================================================================
-   PHONES: slim floating dock + cleaner footer
-   ===================================================================== */
-@media (max-width: 899px) {
-  .pas-mobile-floating-bar {
-    padding: 10px 12px calc(8px + env(safe-area-inset-bottom));
-    background: linear-gradient(to top, rgba(40, 0, 0, 0.4), rgba(40, 0, 0, 0));
-    transition: transform 0.3s cubic-bezier(.3, 1.2, .5, 1), opacity 0.2s ease;
-  }
-  .pas-mobile-floating-bar.is-tucked,
-  body.pm-open .pas-mobile-floating-bar { transform: translateY(130%); opacity: 0; pointer-events: none; }
-  .pas-mobile-floating-bar.is-tucked .mob-dock-inner,
-  body.pm-open .pas-mobile-floating-bar .mob-dock-inner { pointer-events: none; }
-  .mob-dock-inner { max-width: 420px; gap: 8px; }
-  .btn-mobile-pill {
-    min-height: 42px;
-    gap: 6px;
-    padding: 4px 12px 4px 5px;
-    border-width: 2.5px;
-    box-shadow: 0 3px 0 #000;
-    font-size: 14px;
-  }
-  .mob-btn-icon-wrap { width: 28px; height: 28px; }
-  .mob-btn-arrow { display: inline; margin-left: auto; }
-  .mob-btn-label { margin-right: auto; }
-}
-
 @media (max-width: 619px) {
   .pas-footer { padding: 30px 0 calc(28px + env(safe-area-inset-bottom)); }
   .footer-grid { grid-template-columns: minmax(0, 1fr); gap: 18px; }
@@ -2475,4 +2448,121 @@ html:not(.pas-loaded) .title-stamp, html:not(.pas-loaded) .wax-seal__banner, htm
   .register-cue { margin: 2px auto 12px; gap: 8px; }
   .register-cue__badge { font-size: 10.5px; padding: 6px 11px 5px; }
   .register-cue__line { font-size: 14.5px; }
+}
+
+
+/* =====================================================================
+   Register bar: pinned to the TOP on phones/tablets, slides in after the hero logo
+   ===================================================================== */
+.mob-dock-brand { display: none; }
+@media (max-width: 899px) {
+  .pas-mobile-floating-bar {
+    top: 0;
+    bottom: auto;
+    padding: calc(8px + env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) 8px max(12px, env(safe-area-inset-left));
+    background: var(--red);
+    border-bottom: 3px solid #000;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.25);
+    transform: translateY(-110%);
+    transition: transform 0.35s cubic-bezier(.3, 1.2, .5, 1);
+    pointer-events: auto;
+  }
+  .pas-mobile-floating-bar.is-shown { transform: none; }
+  body.pm-open .pas-mobile-floating-bar { transform: translateY(-110%); }
+  .mob-dock-inner {
+    grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 8px;
+    max-width: 640px;
+  }
+  .mob-dock-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px 6px 7px;
+    background: #fff;
+    border: 2.5px solid #000;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #000;
+  }
+  .mob-dock-brand__text { font: 400 13px/1 var(--f-comic); letter-spacing: 0.04em; padding-top: 2px; }
+  .btn-mobile-pill {
+    min-height: 40px;
+    gap: 6px;
+    padding: 4px 10px 4px 4px;
+    border-width: 2.5px;
+    box-shadow: 0 3px 0 #000;
+    font-size: 13px;
+  }
+  .btn-mobile-pill:active { transform: translateY(2px); box-shadow: 0 1px 0 #000; }
+  .mob-btn-icon-wrap { width: 28px; height: 28px; }
+  .mob-btn-arrow { display: inline; margin-left: auto; }
+  .mob-btn-label { margin-right: auto; }
+  .pas-footer { padding-bottom: calc(28px + env(safe-area-inset-bottom)); }
+}
+@media (max-width: 360px) {
+  .mob-dock-brand__text { display: none; }
+  .btn-mobile-pill { font-size: 12px; }
+}
+
+/* =====================================================================
+   Registration area: one clean red panel holding the passes
+   ===================================================================== */
+.pass-section {
+  margin-top: 8px;
+  padding: 18px 16px 18px;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.10), transparent 55%),
+    var(--red);
+  border: 3px solid #000;
+  border-radius: 22px;
+  box-shadow: 6px 6px 0 #000;
+  position: relative;
+  z-index: 2;
+}
+@media (min-width: 760px) {
+  .pass-section { padding: 26px 26px 24px; max-width: 980px; margin-left: auto; margin-right: auto; }
+}
+.register-cue__line { background: rgba(0, 0, 0, 0.28); backdrop-filter: none; -webkit-backdrop-filter: none; }
+
+.register-steps {
+  list-style: none;
+  margin: 2px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+.register-steps li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px 5px 5px;
+  background: #fff;
+  color: #000;
+  border: 2px solid #000;
+  border-radius: 999px;
+  font: 800 12px/1 var(--f-body);
+}
+.register-steps b {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--yellow);
+  border: 1.5px solid #000;
+  font: 900 11px/1 var(--f-body);
+}
+
+/* phones: passes a touch smaller inside the panel */
+@media (max-width: 619px) {
+  .pass-section { margin-left: -6px; margin-right: -6px; padding: 14px 10px 14px; border-radius: 18px; box-shadow: 4px 4px 0 #000; }
+  .register-steps li { font-size: 11px; padding: 4px 8px 4px 4px; }
+  .register-steps b { width: 18px; height: 18px; font-size: 10px; }
+  .pass-card { box-shadow: 4px 4px 0 #000; }
+  .pass-card .pass-perks { margin-top: 10px; gap: 7px; }
+  .pass-more { font-size: 11px; }
 }

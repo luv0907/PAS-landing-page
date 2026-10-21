@@ -19,14 +19,17 @@ export default function App() {
   useReveal();
   useDropHeads();
 
-  // phones: tuck the floating dock away once the footer is on screen
-  const [footerInView, setFooterInView] = useState(false);
+  // phones: the register bar slides down from the top once the hero logo scrolls away
+  const [showBar, setShowBar] = useState(false);
   useEffect(() => {
-    const footer = document.getElementById('siteFooter');
-    if (!footer || !('IntersectionObserver' in window)) return undefined;
-    const io = new IntersectionObserver(([e]) => setFooterInView(e.isIntersecting), { rootMargin: '0px 0px -40px 0px' });
-    io.observe(footer);
-    return () => io.disconnect();
+    let raf = 0;
+    const check = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => setShowBar(window.scrollY > 140));
+    };
+    check();
+    window.addEventListener('scroll', check, { passive: true });
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('scroll', check); };
   }, []);
 
   return (
@@ -57,8 +60,17 @@ export default function App() {
       <Footer />
 
       {/* Mobile floating dock */}
-      <aside className={`pas-mobile-floating-bar${footerInView ? ' is-tucked' : ''}`} aria-label="Mobile Quick Registration">
+      <aside className={`pas-mobile-floating-bar${showBar ? ' is-shown' : ''}`} aria-label="Register">
         <div className="mob-dock-inner">
+          <a className="mob-dock-brand" href="#register" aria-label="Pick At Store, go to registration">
+            <svg viewBox="0 0 750 800" width="20" height="22" aria-hidden="true">
+              <path d="M225.5 192 V172 A150 150 0 0 1 525.5 172 V192" fill="none" stroke="#b32a26" strokeWidth="48" />
+              <path d="M120 163 H630 Q675 163 680 210 L748 735 Q752 788 700 788 H50 Q-2 788 2 735 L70 210 Q75 163 120 163 Z" fill="#b32a26" />
+              <path d="M375 645 L268 495 A143 143 0 1 1 482 495 Z" fill="#fff" />
+              <circle cx="375" cy="400" r="93" fill="#b32a26" />
+            </svg>
+            <span className="mob-dock-brand__text">Register</span>
+          </a>
           <a
             className="btn-mobile-pill btn-mob-customer"
             href={CUSTOMER_FORM_URL}

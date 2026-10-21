@@ -6,9 +6,17 @@ import BagPinLogo from './BagPinLogo';
  * upright and steams for a moment, then a circle opens from the middle to
  * reveal the page. Runs on every screen; never blocks for more than 4 s.
  */
-const FILL_MS = 1300;
-const HOLD_MS = 450;
-const REVEAL_MS = 900;
+const FILL_MS = 650;
+const HOLD_MS = 150;
+const REVEAL_MS = 500;
+
+// show the chai intro once per visit; reloads and repeat visits go straight in
+const seenIntro = () => {
+  try { return sessionStorage.getItem('pas-intro') === '1'; } catch (e) { return false; }
+};
+const rememberIntro = () => {
+  try { sessionStorage.setItem('pas-intro', '1'); } catch (e) { /* storage blocked */ }
+};
 
 const markLoaded = () => {
   document.documentElement.classList.add('pas-loaded');
@@ -16,10 +24,12 @@ const markLoaded = () => {
 };
 
 export default function ChaiLoader() {
-  const [phase, setPhase] = useState('fill');
+  const [phase, setPhase] = useState(() => (seenIntro() ? 'done' : 'fill'));
   const [pct, setPct] = useState(0);
 
   useEffect(() => {
+    if (seenIntro()) { markLoaded(); return undefined; }
+    rememberIntro();
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const fillMs = reduce ? 300 : FILL_MS;
     const t0 = performance.now();
@@ -44,7 +54,7 @@ export default function ChaiLoader() {
     timers.push(setTimeout(() => {
       markLoaded();
       setPhase('done');
-    }, 4000));
+    }, 2000));
     return () => {
       cancelAnimationFrame(raf);
       timers.forEach(clearTimeout);

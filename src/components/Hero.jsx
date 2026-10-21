@@ -181,12 +181,7 @@ export default function Hero() {
         {/* Two founding passes */}
         <div className="pass-section" id="hero-action-boxes">
           <div className="register-cue" id="register" ref={registerRef}>
-            <p className="register-cue__line">Register now for founding access. Only <strong>1,000 customers</strong> and <strong>100 restaurants</strong>.</p>
-            <ol className="register-steps" aria-label="How to register">
-              <li><b>1</b> Pick your pass</li>
-              <li><b>2</b> Fill the short form</li>
-              <li><b>3</b> Get founding perks</li>
-            </ol>
+            <p className="register-cue__line">Only <strong>1,000 customers</strong> &amp; <strong>100 restaurants</strong>. Register now.</p>
           </div>
           <div className="pass-switch" role="tablist" aria-label="Choose your pass">
             <button
@@ -234,16 +229,8 @@ export default function Hero() {
               <div className="pass-body">
                 <div className="pass-num">1,000</div>
                 <h3 className="pass-title">FOUNDING PICKSTARS ACCESS</h3>
-                <p className="pass-sub">Be among the first 1,000 people to experience Pick At Store</p>
+                <p className="pass-sub">Be among the first 1,000 to try Pick At Store. Free.</p>
 
-                <ul className="pass-perks pass-perks--grid">
-                  {['Exclusive Food Experiences', 'Early Access', 'Founding-User Rewards', 'Pick At Store Passport', 'Founding User Status', 'Explore Cafes with Founder'].map((t) => (
-                    <li key={t}>
-                      <span className="perk-star">★</span>
-                      <span><strong>{t}</strong></span>
-                    </li>
-                  ))}
-                </ul>
 
                 <button
                   type="button"
@@ -284,22 +271,8 @@ export default function Hero() {
               <div className="pass-body">
                 <div className="pass-num">100</div>
                 <h3 className="pass-title">FOUNDING RESTAURANTS</h3>
-                <p className="pass-sub">Just 100 restaurants for our first Hyderabad launch. Be one of the first building the future of pickup.</p>
+                <p className="pass-sub">Only 100 spots. ₹1,20,000 of launch support, free.</p>
 
-                <ul className="pass-perks">
-                  <li>
-                    <span className="perk-star">★</span>
-                    <span><strong>Dedicated Premium Restaurant Video</strong> &amp; Local Influencer Reel Feature</span>
-                  </li>
-                  <li>
-                    <span className="perk-star">★</span>
-                    <span><strong>Founding 100 Certificate</strong> &amp; Founding Restaurant Badge</span>
-                  </li>
-                  <li>
-                    <span className="perk-star">★</span>
-                    <span><strong>Counter Display &amp; QR Kit</strong> with Premium Window Stickers</span>
-                  </li>
-                </ul>
 
                 <button
                   type="button"

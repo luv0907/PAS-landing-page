@@ -2578,3 +2578,52 @@ html:not(.pas-loaded) .title-stamp, html:not(.pas-loaded) .wax-seal__banner, htm
 }
 @media (hover: hover) { .register-cue__badge--top:hover { transform: translateY(-1px); color: #fff; } }
 .register-cue__badge--top:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+
+/* =====================================================================
+   Phones: one floating "Register now" pill (replaces the top button bar)
+   ===================================================================== */
+.reg-fab { display: none; }
+@media (max-width: 899px) {
+  .reg-fab {
+    position: fixed;
+    top: calc(10px + env(safe-area-inset-top));
+    left: 50%;
+    z-index: 60;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px 9px 10px;
+    background: var(--yellow);
+    color: #000;
+    border: 2.5px solid #000;
+    border-radius: 999px;
+    box-shadow: 0 4px 0 #000, 0 8px 20px rgba(60, 0, 0, 0.35);
+    font: 400 15px/1 var(--f-comic);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transform: translate(-50%, calc(-100% - 24px));
+    transition: transform 0.35s cubic-bezier(.3, 1.3, .5, 1);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .reg-fab.is-shown { transform: translate(-50%, 0); }
+  .reg-fab:active { transform: translate(-50%, 2px); box-shadow: 0 2px 0 #000; }
+  .reg-fab:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+  body.pm-open .reg-fab { transform: translate(-50%, calc(-100% - 24px)); }
+  .reg-fab__star {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--red-hot);
+    color: #fff;
+    font-size: 12px;
+  }
+  .reg-fab__arrow { font: 900 14px/1 var(--f-body); }
+  .pas-mobile-floating-bar { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .reg-fab { transition: none; } }
+
+/* pass cards without the perk lists */
+.pass-card .pass-sub { margin-bottom: 4px; }
+.pass-card .pass-more { margin-top: 14px; }

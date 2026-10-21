@@ -1,7 +1,7 @@
 import React, { useId } from 'react';
 
 /* Official contact / social links used by the black info bars and the footer */
-export const WHATSAPP_URL = 'https://wa.me/917842287373';
+export const WHATSAPP_URL = 'https://wa.me/919100871273';
 export const INSTAGRAM_URL = 'https://www.instagram.com/pickatstore.in/';
 export const YOUTUBE_URL = 'https://youtu.be/wrxbzmcJhXo';
 
@@ -97,7 +97,7 @@ export default function ContactPlate({ label = 'FOR ENQUIRIES & SOCIAL MEDIA', t
           </a>
         ))}
       </div>
-      <a className="app-dock__phone" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">+91 78422 87373 · Hyderabad</a>
+      <a className="app-dock__phone" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">+91 91008 71273 · Hyderabad</a>
     </div>
     <div className="info-plate info-plate--links">
       <div className="info-plate__inner">
@@ -112,7 +112,7 @@ export default function ContactPlate({ label = 'FOR ENQUIRIES & SOCIAL MEDIA', t
         <span className="info-plate__links">
           <a className="social-btn" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" aria-label="Chat with Pick At Store on WhatsApp">
             <WhatsAppIcon />
-            <span>+91 78422 87373</span>
+            <span>+91 91008 71273</span>
           </a>
           <a className="social-btn" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="Pick At Store on Instagram">
             <InstagramIcon />

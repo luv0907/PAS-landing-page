@@ -97,7 +97,7 @@ export default function MerchantAppSection() {
             <span className="torn-tape torn-tape--r" aria-hidden="true" />
 
             <p className="torn-lead">
-              Just <strong>100 restaurants</strong> for our first Hyderabad launch. Be one of the first building the future of pickup.
+              <strong>100 restaurants</strong> only. Everything below is free.
             </p>
 
             <div className="torn-eyebrow">WHAT YOU GET AS A FOUNDING RESTAURANT</div>
@@ -106,14 +106,13 @@ export default function MerchantAppSection() {
                 <li key={p.title} className="perk-tile" style={{ '--r': `${[-2, 1.5, -1, 2, -1.5, 1][i]}deg` }}>
                   <svg viewBox="0 0 48 48" className="perk-tile__icon" aria-hidden="true">{p.icon}</svg>
                   <span className="perk-tile__title">{p.title}</span>
-                  <span className="perk-tile__line">{p.line}</span>
                 </li>
               ))}
             </ul>
 
             <div className="torn-cta">
               <a className="btn-poster btn-poster--red" href={RESTAURANT_FORM_URL} target="_blank" rel="noopener noreferrer">
-                <span>BECOME A FOUNDING RESTAURANT</span>
+                <span>REGISTER RESTAURANT</span>
                 <span className="btn-poster__icon">↗</span>
               </a>
             </div>

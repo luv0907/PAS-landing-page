@@ -16,10 +16,10 @@ export default function Footer() {
               <img src="/images/pas-logo-footer.webp" alt="Pick At Store" width="936" height="491" className="footer-logo__img" decoding="async" loading="lazy" />
             </a>
             <p className="footer-tagline">
-              India's first unified retail BOPIS platform. Order from your favourite neighbourhood stores and pickup at the store in minutes.
+              India's first Pre-Dine-In platform. Order ahead, pick up in minutes.
             </p>
             <div className="footer-contact">
-              <span>For Queries: <a className="footer-contact__link y" href="https://wa.me/917842287373" target="_blank" rel="noopener noreferrer"><strong>+91 78422 87373</strong></a></span>
+              <span>For Queries: <a className="footer-contact__link y" href="https://wa.me/919100871273" target="_blank" rel="noopener noreferrer"><strong>+91 91008 71273</strong></a></span>
               <span>Website: <a className="footer-contact__link y" href={MAIN_SITE_URL}><strong>www.pickatstore.io</strong></a></span>
               <span>Headquarters: <strong>Hyderabad, Telangana, India</strong></span>
             </div>
@@ -83,13 +83,6 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <p>© 2026 PAS Retail Networks PVT LTD. All rights reserved.</p>
-          <div className="footer-legal">
-            <span>Privacy Shield</span>
-            <span>•</span>
-            <span>Terms of Service</span>
-            <span>•</span>
-            <span>Security Protected</span>
-          </div>
         </div>
       </div>
     </footer>

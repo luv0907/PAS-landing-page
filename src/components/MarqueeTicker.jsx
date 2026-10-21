@@ -3,22 +3,16 @@ import React from 'react';
 export default function MarqueeTicker() {
   const itemsRow1 = [
     { text: 'FOUNDING PICKSTARS ACCESS', icon: '★' },
-    { text: 'EXCLUSIVE FOOD EXPERIENCES', icon: '★' },
     { text: 'EARLY ACCESS', icon: '★' },
-    { text: 'FOUNDING-USER REWARDS', icon: '★' },
-    { text: 'PICK AT STORE PASSPORT', icon: '★' },
-    { text: 'FOUNDING USER STATUS', icon: '★' },
-    { text: 'EXPLORE CAFES WITH FOUNDER', icon: '★' },
+    { text: 'FOUNDING REWARDS', icon: '★' },
+    { text: 'REGISTER FREE', icon: '★' },
   ];
 
   const itemsRow2 = [
     { text: "INDIA'S FIRST PRE-DINE-IN PLATFORM", icon: '★' },
     { text: 'JUST 100 RESTAURANTS', icon: '★' },
     { text: 'HYDERABAD LAUNCH', icon: '★' },
-    { text: 'FOUNDING 100 CERTIFICATE', icon: '★' },
-    { text: 'FEATURED ON THE FOUNDING 100 WALL', icon: '★' },
-    { text: 'LOCAL INFLUENCER REELS', icon: '★' },
-    { text: 'COUNTER DISPLAY & QR KIT', icon: '★' },
+    { text: '₹1,20,000 OF SUPPORT, FREE', icon: '★' },
   ];
 
   return (

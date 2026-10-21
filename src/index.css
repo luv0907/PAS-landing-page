@@ -2566,3 +2566,15 @@ html:not(.pas-loaded) .title-stamp, html:not(.pas-loaded) .wax-seal__banner, htm
   .pass-card .pass-perks { margin-top: 10px; gap: 7px; }
   .pass-more { font-size: 11px; }
 }
+
+/* "Registrations open" badge sits at the very top of the page */
+.register-cue__badge--top {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  width: max-content;
+  margin: 0 auto 10px;
+  text-decoration: none;
+}
+@media (hover: hover) { .register-cue__badge--top:hover { transform: translateY(-1px); color: #fff; } }
+.register-cue__badge--top:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }

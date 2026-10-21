@@ -93,6 +93,8 @@ export default function Hero() {
       />
 
       <div className="poster-inner">
+        <a className="register-cue__badge register-cue__badge--top" href="#register">Registrations open</a>
+
         {/* "… PRESENTS" brand tag */}
         <header className="poster-top-brand">
           {/* official logo artwork (exact layout), PRESENTS tucked under "store", on a clean white card */}
@@ -179,7 +181,6 @@ export default function Hero() {
         {/* Two founding passes */}
         <div className="pass-section" id="hero-action-boxes">
           <div className="register-cue" id="register" ref={registerRef}>
-            <span className="register-cue__badge"><span className="register-cue__dot" aria-hidden="true" />Registrations open</span>
             <p className="register-cue__line">Register now for founding access. Only <strong>1,000 customers</strong> and <strong>100 restaurants</strong>.</p>
             <ol className="register-steps" aria-label="How to register">
               <li><b>1</b> Pick your pass</li>

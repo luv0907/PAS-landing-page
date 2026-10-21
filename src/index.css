@@ -2871,3 +2871,21 @@ html:not(.pas-loaded) .title-stamp, html:not(.pas-loaded) .wax-seal__banner, htm
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* =====================================================================
+   Keep every box inside the red area, clear of the road (left) and the
+   old-city walls (both sides). --side-clear = wall width + breathing room.
+   ===================================================================== */
+:root { --side-clear: 32px; }
+@media (min-width: 600px) { :root { --side-clear: calc(clamp(22px, 7.5vw, 46px) + 18px); } }
+@media (min-width: 900px) { :root { --side-clear: max(28px, calc(min(104px, 7.5vw) + 18px - max(0px, (100vw - 1080px) / 2))); } }
+
+.pas-container { padding-left: max(var(--gutter), var(--side-clear)); padding-right: max(var(--gutter), var(--side-clear)); }
+.poster-inner .pass-section {
+  margin-left: max(0px, calc(var(--side-clear) - var(--gutter)));
+  margin-right: max(0px, calc(var(--side-clear) - var(--gutter)));
+}
+@media (min-width: 760px) {
+  .poster-inner .pass-section { max-width: min(980px, calc(100% - 2 * max(0px, var(--side-clear) - var(--gutter)))); margin-left: auto; margin-right: auto; }
+}
+.map-stop__art { width: min(86vw, 520px, calc(100vw - 2 * var(--side-clear))); }

@@ -377,7 +377,7 @@ export default function CharminarScene() {
 
 
         {/* ribbon banner with the stage name, above the minarets (scaled up) */}
-        <g transform="translate(500 72) scale(1.25) translate(-500 -72)">
+        <g transform="translate(500 70) scale(1.45) translate(-500 -70)">
         <g stroke={INK} strokeWidth="1.6" strokeLinejoin="round" className="scene-ribbon">
           <path d="M248 50 L206 58 L222 72 L206 90 L248 84 Z" fill={YEL} />
           <path d="M248 50 L206 58 L222 72 L206 90 L248 84 Z" fill="url(#skHatchLight)" />

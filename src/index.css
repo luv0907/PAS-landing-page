@@ -84,7 +84,7 @@ a { color: inherit; }
   height: calc(100% + 420px);
   background-repeat: repeat;
   background-size: 420px 420px;
-  opacity: 0.5;
+  opacity: 0.22;
   will-change: transform;
 }
 @media (max-width: 639px) {
@@ -2039,4 +2039,124 @@ html:not(.pas-loaded) .title-stamp, html:not(.pas-loaded) .wax-seal__banner, htm
 @media (prefers-reduced-motion: reduce) {
   .save-sheet, .save-row, .save-row__free, .also-free { animation: none !important; }
   .save-row__price s::after { animation: none !important; transform: scaleX(1) rotate(-3deg); }
+}
+
+/* ---------- savings sheet: paid onboarding row + pay strip ---------- */
+.save-row__was { display: none; }
+.save-row__free--pay {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 6px 8px 5px;
+  background: #fff;
+  color: var(--red-deep);
+  font-size: 15px;
+  white-space: nowrap;
+}
+.save-row__free--pay small { font: 800 8.5px/1 var(--f-body); letter-spacing: 0.1em; text-transform: uppercase; color: #000; }
+
+.save-sheet__pay {
+  flex-basis: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  padding: 10px 14px;
+  background: #000;
+  color: #fff;
+  border-radius: 10px;
+  transform: rotate(-0.6deg);
+}
+.save-sheet__pay span { font: 800 12px/1 var(--f-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--yellow); }
+.save-sheet__pay strong { font: 400 26px/1 var(--f-comic); letter-spacing: 0.02em; color: #fff; }
+.save-sheet__pay em { font: 700 12.5px/1.3 var(--f-body); font-style: normal; color: rgba(255, 255, 255, 0.75); }
+.pass-modal__cta-fee { display: none; }
+
+/* ---------- phones: ticket-style savings cards ---------- */
+@media (max-width: 619px) {
+  .save-sheet { background: #fff6d6; }
+  .save-sheet__section { padding: 16px 10px 4px; }
+  .save-sheet__section + .save-sheet__section { border-top: 0; }
+  .save-sheet__rows { display: grid; gap: 12px; margin-top: 12px; }
+  .save-row {
+    position: relative;
+    grid-template-columns: 26px minmax(0, 1fr);
+    grid-template-areas:
+      "star text"
+      "strip strip";
+    row-gap: 0;
+    padding: 12px 12px 0;
+    background: #fff;
+    border: 2px solid #000;
+    border-radius: 12px;
+    box-shadow: 3px 3px 0 #000;
+    overflow: hidden;
+  }
+  .save-row + .save-row { border-top: 2px solid #000; }
+  .save-row:nth-child(odd) { transform: rotate(-0.5deg); }
+  .save-row:nth-child(even) { transform: rotate(0.5deg); }
+  .save-row__star { margin-top: 1px; }
+  .save-row__text { padding-bottom: 12px; }
+
+  /* perforated tear line + bottom stub holding the price and the stamp */
+  .save-row__price,
+  .save-row__free { grid-row: 2; }
+  .save-row__price {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 -12px;
+    padding: 10px 104px 10px 12px;
+    min-height: 50px;
+    background:
+      radial-gradient(circle at 0 0, transparent 7px, #fff7dc 7.5px) top left / 51% 100% no-repeat,
+      radial-gradient(circle at 100% 0, transparent 7px, #fff7dc 7.5px) top right / 51% 100% no-repeat;
+    border-top: 2px dashed #000;
+  }
+  .save-row__was {
+    display: inline-block;
+    font: 800 9px/1 var(--f-body);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #777;
+  }
+  .save-row__price s { font-size: 14px; color: #666; }
+  .save-row__free {
+    grid-column: 1 / -1;
+    justify-self: end;
+    align-self: center;
+    margin-right: -2px;
+    position: relative;
+    z-index: 1;
+  }
+  .save-row--pay { background: #fff; }
+  .save-row--pay .save-row__price { background-color: transparent; }
+  .save-row__free--pay { font-size: 14px; padding: 5px 8px 4px; }
+
+  .save-sheet__total { flex-direction: column; align-items: flex-start; gap: 4px; padding: 16px 14px; }
+  .save-sheet__total-label { font-size: 18px; }
+  .save-sheet__total-num { font-size: clamp(30px, 9vw, 38px); }
+  .save-sheet__pay { margin-top: 10px; align-self: stretch; }
+  .save-sheet__pay strong { font-size: 30px; }
+
+  .also-free__card { gap: 18px; }
+  .also-free__col + .also-free__col { padding-top: 16px; border-top: 2px dashed rgba(122, 15, 8, 0.4); }
+
+  /* the register button stays in reach while scrolling the sheet */
+  .pass-modal__cta {
+    position: sticky;
+    bottom: 10px;
+    z-index: 3;
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.92), 4px 4px 0 6px #000;
+  }
+  .pass-modal__cta-fee {
+    display: inline-block;
+    padding: 4px 8px 3px;
+    background: #000;
+    color: var(--yellow);
+    border-radius: 6px;
+    font: 400 14px/1 var(--f-comic);
+    letter-spacing: 0.04em;
+  }
 }

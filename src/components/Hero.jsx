@@ -21,6 +21,33 @@ export default function Hero() {
     setDetail({ kind, origin: r ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : null });
   };
 
+  // on arrival, glide down to the registration cards once the intro has played
+  const registerRef = useRef(null);
+  useEffect(() => {
+    if (window.location.hash) return undefined;
+    let cancelled = false;
+    let t = 0;
+    const cancel = () => { cancelled = true; clearTimeout(t); };
+    const userMoved = ['wheel', 'touchstart', 'keydown', 'mousedown'];
+    userMoved.forEach((ev) => window.addEventListener(ev, cancel, { once: true, passive: true }));
+    const go = () => {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      t = setTimeout(() => {
+        const el = registerRef.current;
+        if (cancelled || !el || window.scrollY > 80) return;
+        const top = el.getBoundingClientRect().top + window.scrollY - 12;
+        window.scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
+      }, reduce ? 300 : 2100);
+    };
+    if (document.documentElement.classList.contains('pas-loaded')) go();
+    else window.addEventListener('pas:loaded', go, { once: true });
+    return () => {
+      cancel();
+      window.removeEventListener('pas:loaded', go);
+      userMoved.forEach((ev) => window.removeEventListener(ev, cancel));
+    };
+  }, []);
+
   // the title block shakes at the moment the rubber stamp hits the poster
   const [stampRun, setStampRun] = useState(0);
   const timers = useRef([]);
@@ -151,6 +178,10 @@ export default function Hero() {
 
         {/* Two founding passes */}
         <div className="pass-section" id="hero-action-boxes">
+          <div className="register-cue" id="register" ref={registerRef}>
+            <span className="register-cue__badge"><span className="register-cue__dot" aria-hidden="true" />Registrations open</span>
+            <p className="register-cue__line">Register now for founding access. Only <strong>1,000 customers</strong> and <strong>100 restaurants</strong>.</p>
+          </div>
           <div className="pass-switch" role="tablist" aria-label="Choose your pass">
             <button
               type="button"

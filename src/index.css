@@ -2386,3 +2386,93 @@ html:not(.pas-loaded) .title-stamp, html:not(.pas-loaded) .wax-seal__banner, htm
   .pass-modal__head { padding-top: 14px; }
   .save-tabs { top: 0; margin-top: 14px; box-shadow: 0 -20px 0 #fff; }
 }
+
+/* =====================================================================
+   Registration cue above the pass cards
+   ===================================================================== */
+.register-cue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 6px auto 18px;
+  max-width: 620px;
+  text-align: center;
+  scroll-margin-top: 12px;
+}
+.register-cue__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px 6px;
+  background: #000;
+  color: var(--yellow);
+  border: 2.5px solid #000;
+  border-radius: 999px;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.35);
+  font: 800 12px/1 var(--f-body);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.register-cue__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #3ddc84;
+  box-shadow: 0 0 0 0 rgba(61, 220, 132, 0.7);
+  animation: cue-pulse 1.8s ease-out infinite;
+}
+@keyframes cue-pulse { 0% { box-shadow: 0 0 0 0 rgba(61, 220, 132, 0.7); } 100% { box-shadow: 0 0 0 10px rgba(61, 220, 132, 0); } }
+.register-cue__line {
+  margin: 0;
+  font: 700 clamp(15px, 3.6vw, 19px)/1.4 var(--f-body);
+  color: var(--white);
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.45);
+  text-wrap: balance;
+}
+.register-cue__line strong { color: var(--yellow); font-weight: 900; }
+.register-cue__line { padding: 8px 14px; background: rgba(40, 0, 0, 0.62); border-radius: 12px; backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+.register-cue { position: relative; z-index: 3; }
+@media (prefers-reduced-motion: reduce) { .register-cue__dot { animation: none; } }
+
+/* =====================================================================
+   PHONES: everything a size smaller
+   ===================================================================== */
+@media (max-width: 619px) {
+  /* hero */
+  .poster-hero { padding-bottom: 24px; }
+  .title-banner span { font-size: 13px; padding: 5px 11px 3px; }
+  .title-line--pickat { font-size: 9.6vw; }
+  .title-line--store { font-size: 12vw; }
+  .side-badge__big { font-size: 20px; }
+  .side-badge__small { font-size: 12px; }
+  .side-badge__icon { width: 44px; }
+
+  /* pass cards */
+  .pass-switch { transform: scale(0.92); }
+  .pass-card .pass-tag { padding: 8px 12px; font-size: 9.5px; }
+  .pass-body { padding: 12px 14px 16px; }
+  .pass-card .pass-num { font-size: 56px; }
+  .pass-card .pass-title { font-size: 20px; margin-top: 6px; }
+  .pass-card .pass-sub { font-size: 12px; }
+  .pass-perks li { font-size: 12.5px; gap: 8px; }
+  .perk-star { width: 18px; height: 18px; font-size: 9px; }
+  .pass-stub { padding: 8px 14px 9px; }
+  .btn-poster { min-height: 48px; padding: 10px 14px; font-size: 16px; box-shadow: 0 4px 0 #000; }
+  .btn-poster__icon { width: 24px; height: 24px; }
+
+  /* sections further down */
+  .tape-wrap { padding: 20px 0 24px; }
+  .tape__item { font-size: 14px; padding: 8px 12px 6px; }
+  .vendor-section, .lineup-section { padding: 18px 0 28px; }
+  .vendor-title__call { font-size: 26px; }
+  .vendor-title__main { font-size: 30px; }
+  .lineup-title__white { font-size: 38px; }
+  .lineup-title__yellow { font-size: 26px; }
+  .torn-card { padding: 30px 16px 26px; }
+  .torn-names { font-size: 23px; }
+  .torn-activities { font-size: 15px; }
+  .register-cue { margin: 2px auto 12px; gap: 8px; }
+  .register-cue__badge { font-size: 10.5px; padding: 6px 11px 5px; }
+  .register-cue__line { font-size: 14.5px; }
+}

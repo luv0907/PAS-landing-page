@@ -1469,7 +1469,7 @@ main#main-content, .pas-footer { position: relative; z-index: 1; }
 .pas-backdrop__frame .cf-side--l { left: 0; }
 .pas-backdrop__frame .cf-side--r { right: 0; transform: scaleX(-1); }
 .cf-void { position: absolute; inset: 0; background: #1c0604; }
-.cf-strip { position: absolute; left: 0; top: 0; background-repeat: repeat-y; will-change: transform; }
+.cf-strip { position: absolute; left: 0; top: 0; background-repeat: repeat-y; }
 .cf-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 
 /* =====================================================================
@@ -1798,4 +1798,245 @@ html:not(.pas-loaded) .title-stamp, html:not(.pas-loaded) .wax-seal__banner, htm
 
 @media (prefers-reduced-motion: reduce) {
   .pass-modal, .pass-modal__sheet, .pass-modal__group, .pass-modal__items .perk-star, .pass-modal__cta, .pass-modal__cta::after { animation: none !important; }
+}
+
+/* ================================================================
+   Merchant savings sheet (restaurant "View full details" popup)
+   ================================================================ */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+.pass-modal__sheet--merchant { width: min(100%, 760px); }
+
+.save-sheet {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  border: 3px solid #000;
+  border-radius: 14px;
+  box-shadow: 6px 6px 0 #000;
+  animation: pm-drop 0.55s cubic-bezier(.3, 1.5, .5, 1) 0.3s backwards;
+}
+.save-sheet__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #000;
+  color: #fff;
+  font: 900 12.5px/1.2 var(--f-body);
+  letter-spacing: 0.14em;
+}
+.save-sheet__bar-star { color: var(--yellow); }
+.save-sheet__rates { color: var(--yellow); white-space: nowrap; }
+
+.save-sheet__cols,
+.save-row {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) 150px 84px;
+  column-gap: 12px;
+  align-items: center;
+}
+.save-sheet__cols {
+  padding: 10px 16px 8px;
+  border-bottom: 3px solid #000;
+  font: 800 10.5px/1 var(--f-body);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #555;
+}
+.save-sheet__cols span:first-child { grid-column: 1 / 3; }
+.save-sheet__cols span:nth-child(3) { text-align: center; }
+.save-sheet__cols span:nth-child(4) { text-align: center; }
+
+.save-sheet__section { padding: 16px 16px 2px; }
+.save-sheet__section + .save-sheet__section { border-top: 2px dashed #d6d6d6; }
+
+.save-chip {
+  display: inline-block;
+  padding: 6px 12px 5px;
+  background: var(--red-hot);
+  color: #fff;
+  font: 400 15px/1 var(--f-comic);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 2.5px solid #000;
+  border-radius: 7px;
+  box-shadow: 3px 3px 0 #000;
+  transform: rotate(-1.5deg);
+}
+
+.save-sheet__rows { list-style: none; padding: 0; margin: 6px 0 0; }
+.save-row {
+  padding: 12px 0;
+  animation: save-row-in 0.45s cubic-bezier(.25, 1.3, .5, 1) backwards;
+  animation-delay: calc(0.45s + var(--i, 0) * 80ms);
+}
+.save-row + .save-row { border-top: 1.5px dashed #e3e3e3; }
+@keyframes save-row-in { from { opacity: 0; transform: translateX(-18px); } to { opacity: 1; transform: none; } }
+
+.save-row__star {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 2.5px solid #000;
+  border-radius: 50%;
+  background: var(--yellow);
+  font-size: 13px;
+  line-height: 1;
+}
+.save-row__text { display: grid; gap: 3px; min-width: 0; }
+.save-row__title { font: 800 15.5px/1.25 var(--f-body); color: #000; }
+.save-row__desc { font: 600 13px/1.4 var(--f-body); color: #555; }
+
+.save-row__price { text-align: center; white-space: nowrap; }
+.save-row__price s {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  font: 800 14px/1 var(--f-body);
+  color: #8a8a8a;
+}
+.save-row__price s::after {
+  content: '';
+  position: absolute;
+  left: -3px;
+  right: -3px;
+  top: 50%;
+  height: 3px;
+  margin-top: -1px;
+  background: var(--red-hot);
+  border-radius: 2px;
+  transform: scaleX(0) rotate(-3deg);
+  transform-origin: left center;
+  animation: save-strike 0.35s ease-out forwards;
+  animation-delay: calc(0.75s + var(--i, 0) * 80ms);
+}
+@keyframes save-strike { to { transform: scaleX(1) rotate(-3deg); } }
+
+.save-row__free {
+  justify-self: center;
+  padding: 7px 12px 6px;
+  background: var(--yellow);
+  border: 2.5px solid #000;
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 #000;
+  font: 400 16px/1 var(--f-comic);
+  letter-spacing: 0.06em;
+  color: #000;
+  transform: rotate(-3deg);
+  animation: save-stamp 0.4s cubic-bezier(.3, 1.8, .5, 1) backwards;
+  animation-delay: calc(0.95s + var(--i, 0) * 80ms);
+}
+@keyframes save-stamp { 0% { opacity: 0; transform: scale(2.2) rotate(-14deg); } 100% { opacity: 1; transform: rotate(-3deg); } }
+
+.save-sheet__total {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 16px;
+  margin-top: 12px;
+  padding: 16px 18px;
+  background: var(--yellow);
+  border-top: 3px dashed #000;
+}
+.save-sheet__total-label { font: 400 clamp(22px, 4.6vw, 28px)/1 var(--f-comic); letter-spacing: 0.03em; text-transform: uppercase; color: #000; }
+.save-sheet__total-num {
+  font: 400 clamp(26px, 6vw, 40px)/1 var(--f-comic);
+  color: var(--red-hot);
+  -webkit-text-stroke: 1.5px #000;
+  text-shadow: 3px 3px 0 #000;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* "Plus, also free" — red doodle wall with a yellow card */
+.also-free {
+  position: relative;
+  margin-top: 22px;
+  padding: 20px clamp(14px, 3vw, 24px) 22px;
+  background:
+    radial-gradient(circle at 12% 20%, rgba(255, 255, 255, 0.08) 0 2px, transparent 3px) 0 0 / 34px 34px,
+    var(--red);
+  border: 3px solid #000;
+  border-radius: 14px;
+  box-shadow: 6px 6px 0 #000;
+  animation: pm-drop 0.55s cubic-bezier(.3, 1.5, .5, 1) 1.2s backwards;
+}
+.also-free__title {
+  margin: 0 0 14px;
+  text-align: center;
+  font: 400 clamp(28px, 6vw, 40px)/1 var(--f-comic);
+  color: #fff;
+  text-transform: uppercase;
+  -webkit-text-stroke: 2px #000;
+  text-shadow: 3px 3px 0 #000;
+  letter-spacing: 0.02em;
+}
+.also-free__card {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 24px;
+  padding: 18px 20px;
+  background: var(--yellow-soft);
+  border: 3px solid #000;
+  outline: 1.5px dashed rgba(122, 15, 8, 0.45);
+  outline-offset: -10px;
+  box-shadow: 6px 6px 0 #000;
+}
+.also-free__name {
+  margin: 0 0 10px;
+  font: 400 clamp(19px, 3.6vw, 24px)/1 var(--f-block);
+  font-weight: 900;
+  color: var(--maroon);
+  text-transform: uppercase;
+}
+.also-free__col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
+.also-free__col li { display: flex; align-items: flex-start; gap: 9px; font: 700 13.5px/1.35 var(--f-body); color: #111; }
+.also-free__dot {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #000;
+  border-radius: 50%;
+  background: var(--red-hot);
+  color: #fff;
+  font-size: 10px;
+  line-height: 1;
+}
+
+/* phones: each row stacks — title on top, old price + FREE underneath */
+@media (max-width: 619px) {
+  .save-sheet { box-shadow: 4px 4px 0 #000; border-width: 2.5px; }
+  .save-sheet__bar { padding: 10px 12px; font-size: 10.5px; letter-spacing: 0.1em; }
+  .save-sheet__cols { display: none; }
+  .save-sheet__section { padding: 14px 12px 0; }
+  .save-chip { font-size: 13px; padding: 5px 10px 4px; }
+  .save-row {
+    grid-template-columns: 26px minmax(0, 1fr) auto;
+    grid-template-areas:
+      "star text text"
+      ".    price free";
+    row-gap: 8px;
+    column-gap: 10px;
+  }
+  .save-row__star { grid-area: star; width: 24px; height: 24px; font-size: 11px; border-width: 2px; align-self: start; }
+  .save-row__text { grid-area: text; }
+  .save-row__price { grid-area: price; text-align: left; }
+  .save-row__free { grid-area: free; font-size: 14px; padding: 6px 10px 5px; box-shadow: 2px 2px 0 #000; }
+  .save-row__title { font-size: 14.5px; }
+  .save-row__desc { font-size: 12.5px; }
+  .save-sheet__total { padding: 14px 12px; }
+  .save-sheet__total-num { -webkit-text-stroke-width: 1px; text-shadow: 2px 2px 0 #000; }
+  .also-free { box-shadow: 4px 4px 0 #000; }
+  .also-free__card { grid-template-columns: minmax(0, 1fr); padding: 16px 16px; box-shadow: 4px 4px 0 #000; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .save-sheet, .save-row, .save-row__free, .also-free { animation: none !important; }
+  .save-row__price s::after { animation: none !important; transform: scaleX(1) rotate(-3deg); }
 }

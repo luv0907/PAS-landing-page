@@ -15,7 +15,6 @@ const tileSize = () => (window.innerWidth < 640 ? 300 : 420);
 export default function PosterBackdrop() {
   const wrapRef = useRef(null);
   const doodleRef = useRef(null);
-  const stripPeriod = useRef(300);
   const dims = useRef({ W: 0, H: 0 });
 
   const frameRef = useRef(null);
@@ -23,20 +22,16 @@ export default function PosterBackdrop() {
   const trimRefs = useRef([]);
   const lastTrim = useRef(-1);
 
-  // old-city floors drift past at half the scroll speed (parallax).
-  // The facade is a pre-drawn tile, so this is a GPU-only translate.
-  const moveStrips = () => {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const y = reduce ? 0 : (window.scrollY * 0.5) % stripPeriod.current;
+  // old-city buildings stay put: they are a fixed frame and do NOT move
+  // with the page scroll. Strips sit at 0 and the scalloped trim is drawn once.
+  const placeStrips = () => {
     stripRefs.current.forEach((el) => {
-      if (el) el.style.transform = `translate3d(0, ${(-y).toFixed(1)}px, 0)`;
+      if (el) el.style.transform = 'none';
     });
-    // the white scalloped edge travels with the buildings (cheap: one thin path)
     const { W, H } = dims.current;
-    const phase = reduce ? 0 : Math.round(window.scrollY * 0.5);
-    if (W && phase !== lastTrim.current) {
-      lastTrim.current = phase;
-      const d = buildTrim(W, H, phase);
+    if (W && lastTrim.current !== 0) {
+      lastTrim.current = 0;
+      const d = buildTrim(W, H, 0);
       trimRefs.current.forEach((t) => t && t.setAttribute('d', d));
     }
   };
@@ -52,7 +47,6 @@ export default function PosterBackdrop() {
       const H = wrap.clientHeight;
       dims.current = { W, H };
       const fr = buildCityFrame(W, H);
-      stripPeriod.current = fr.period;
       const side = (cls) => `
         <div class="cf-side ${cls}" style="width:${Math.ceil(fr.a + 12)}px;height:${Math.ceil(fr.endY + 4)}px;clip-path:path('${fr.clip}')">
           <div class="cf-void"></div>
@@ -69,7 +63,7 @@ export default function PosterBackdrop() {
       stripRefs.current = [...host.querySelectorAll('.cf-strip')];
       trimRefs.current = [...host.querySelectorAll('.cf-trim')];
       lastTrim.current = -1;
-      moveStrips();
+      placeStrips();
     };
     draw();
     const ro = new ResizeObserver(() => {
@@ -102,7 +96,6 @@ export default function PosterBackdrop() {
       raf = requestAnimationFrame(() => {
         const y = (window.scrollY * 0.35) % tile;
         el.style.transform = `translate3d(0, ${-y}px, 0)`;
-        moveStrips();
       });
     };
     const onResize = () => {

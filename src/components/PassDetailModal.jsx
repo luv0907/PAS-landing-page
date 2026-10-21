@@ -19,6 +19,46 @@ export const PASS_DETAILS = {
     title: 'FOUNDING RESTAURANTS',
     sub: 'Just 100 restaurants for our first Hyderabad launch. Be one of the first building the future of pickup.',
     listHeading: 'What you get as a founding restaurant:',
+    savings: {
+      title: 'MERCHANT SAVINGS SHEET',
+      rates: 'HYD · 2026 RATES',
+      totalMin: 88000,
+      totalMax: 191000,
+      sections: [
+        {
+          name: 'Marketing',
+          rows: [
+            { title: 'Premium restaurant video', desc: 'Professionally shot & edited film of your food and space.', min: 25000, max: 50000 },
+            { title: 'Local influencer reel', desc: 'A Hyderabad food creator visits and posts a reel.', min: 15000, max: 40000 },
+            { title: 'Social media & marketing support', desc: 'Posts, captions and a launch campaign for a month.', min: 15000, max: 30000 },
+          ],
+        },
+        {
+          name: 'Visibility',
+          rows: [
+            { title: 'Priority listing & featured campaigns', desc: 'Top placement in the app and launch campaigns.', min: 10000, max: 25000 },
+          ],
+        },
+        {
+          name: 'Launch Support',
+          rows: [
+            { title: 'Dedicated onboarding', desc: 'We set up your menu, staff and pickup flow.', min: 10000, max: 20000 },
+            { title: 'Offline launch marketing', desc: 'Flyers and on-ground promotion near your store.', min: 8000, max: 15000 },
+          ],
+        },
+        {
+          name: 'In-Store Kit',
+          rows: [
+            { title: 'Counter display & QR kit', desc: 'Printed standee with your ordering QR code.', min: 3000, max: 6000 },
+            { title: 'Premium window stickers', desc: 'Founding 100 window & door branding.', min: 2000, max: 5000 },
+          ],
+        },
+      ],
+      extras: [
+        { name: 'Recognition', items: ['Founding 100 certificate', 'Founding restaurant badge in the app', 'Featured on the Founding 100 wall'] },
+        { name: 'Priority Access', items: ['First pick for brand campaigns', 'Early access to new merchant features', 'Invites to Pick At Store launch events'] },
+      ],
+    },
     groups: [
       { icon: '🎬', name: 'Marketing', items: ['Dedicated Premium Restaurant Video', 'Local Influencer Reel Feature', 'Social Media & Marketing Support'] },
       { icon: '🏅', name: 'Recognition', items: ['Founding 100 Certificate', 'Founding Restaurant Badge', 'Featured on the Founding 100 Wall'] },
@@ -51,6 +91,99 @@ export const PASS_DETAILS = {
     stub: 'PICKSTARS PASS',
   },
 };
+
+const inr = (n) => `₹${Math.round(n).toLocaleString('en-IN')}`;
+
+/* counts up from 0 once the sheet has landed */
+function useCountUp(target, delay = 900, duration = 1300) {
+  const [v, setV] = useState(() => (
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches ? target : 0
+  ));
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setV(target); return undefined; }
+    let raf = 0;
+    let start = 0;
+    const tick = (t) => {
+      if (!start) start = t;
+      const p = Math.min(1, (t - start) / duration);
+      setV(target * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    const to = setTimeout(() => { raf = requestAnimationFrame(tick); }, delay);
+    return () => { clearTimeout(to); cancelAnimationFrame(raf); };
+  }, [target, delay, duration]);
+  return v;
+}
+
+function SavingsSheet({ data }) {
+  let row = 0;
+  const lo = useCountUp(data.totalMin);
+  const hi = useCountUp(data.totalMax);
+  return (
+    <>
+      <section className="save-sheet" aria-label="Merchant savings sheet">
+        <header className="save-sheet__bar">
+          <span><span className="save-sheet__bar-star" aria-hidden="true">★</span> {data.title}</span>
+          <span className="save-sheet__rates">{data.rates}</span>
+        </header>
+
+        <div className="save-sheet__cols" aria-hidden="true">
+          <span>Benefit</span>
+          <span>Elsewhere</span>
+          <span>With PAS</span>
+        </div>
+
+        {data.sections.map((sec) => (
+          <div key={sec.name} className="save-sheet__section">
+            <span className="save-chip">{sec.name}</span>
+            <ul className="save-sheet__rows">
+              {sec.rows.map((r) => {
+                const i = row++;
+                return (
+                  <li key={r.title} className="save-row" style={{ '--i': i }}>
+                    <span className="save-row__star" aria-hidden="true">★</span>
+                    <div className="save-row__text">
+                      <strong className="save-row__title">{r.title}</strong>
+                      <span className="save-row__desc">{r.desc}</span>
+                    </div>
+                    <span className="save-row__price">
+                      <span className="sr-only">Usually </span>
+                      <s>{inr(r.min)}–{inr(r.max).slice(1)}</s>
+                    </span>
+                    <span className="save-row__free">FREE</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))}
+
+        <footer className="save-sheet__total">
+          <span className="save-sheet__total-label">You save</span>
+          <span className="save-sheet__total-num" aria-label={`${inr(data.totalMin)} to ${inr(data.totalMax)}`}>
+            {inr(lo)}–{inr(hi).slice(1)}
+          </span>
+        </footer>
+      </section>
+
+      <section className="also-free" aria-labelledby="also-free-title">
+        <h4 className="also-free__title" id="also-free-title">Plus, also free</h4>
+        <div className="also-free__card">
+          {data.extras.map((g) => (
+            <div key={g.name} className="also-free__col">
+              <h5 className="also-free__name">{g.name}</h5>
+              <ul>
+                {g.items.map((it) => (
+                  <li key={it}><span className="also-free__dot" aria-hidden="true">★</span>{it}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+    </>
+  );
+}
 
 export default function PassDetailModal({ kind, origin, onClose, onRegister }) {
   const data = kind ? PASS_DETAILS[kind] : null;
@@ -122,6 +255,7 @@ export default function PassDetailModal({ kind, origin, onClose, onRegister }) {
 
           <h4 className="pass-modal__list-heading">{data.listHeading}</h4>
 
+          {data.savings ? <SavingsSheet data={data.savings} /> : (
           <ul className={`pass-modal__groups${rich ? '' : ' pass-modal__groups--simple'}`}>
             {data.groups.map((g, i) => (
               <li key={g.name} className="pass-modal__group" style={{ '--i': i }}>
@@ -139,6 +273,7 @@ export default function PassDetailModal({ kind, origin, onClose, onRegister }) {
               </li>
             ))}
           </ul>
+          )}
 
           <a
             id={`pass-modal-cta-${data.tone}`}

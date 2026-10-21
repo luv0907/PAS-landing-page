@@ -2888,3 +2888,17 @@ html:not(.pas-loaded) .title-stamp, html:not(.pas-loaded) .wax-seal__banner, htm
   .pass-card .pass-tag__serial { margin-left: auto; }
   .pass-stub__barcode { white-space: nowrap; overflow: hidden; max-width: 60%; }
 }
+
+/* cards never grow wider than the screen; long strip text trims instead */
+.pass-grid > * { min-width: 0; }
+@media (max-width: 619px) {
+  .pass-section, .pass-grid { width: 100%; max-width: 100%; }
+  .pass-grid { justify-items: center; }
+  .pass-card { width: 100%; max-width: 420px; box-sizing: border-box; }
+  .pass-card .pass-tag { gap: 6px; }
+  .pass-card .pass-tag > span:nth-child(2) { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .pass-card .pass-tag__serial { flex: none; }
+  .pass-card .pass-stub { overflow: hidden; }
+  .pass-card .pass-stub__label { flex: none; white-space: nowrap; }
+}
+.reg-fab { white-space: nowrap; }

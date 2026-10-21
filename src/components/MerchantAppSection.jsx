@@ -7,7 +7,7 @@ const STROKE = { stroke: '#000', strokeWidth: 2.6, strokeLinecap: 'round', strok
 const PERKS = [
   {
     title: 'Launch Video & Reel',
-    worth: 50000,
+    worth: 55000,
     note: 'Pro film + influencer reel',
     icon: (
       <>
@@ -19,7 +19,7 @@ const PERKS = [
   },
   {
     title: 'Social Media Support',
-    worth: 20000,
+    worth: 22000,
     note: 'A month of posts & a campaign',
     icon: (
       <>
@@ -30,7 +30,7 @@ const PERKS = [
   },
   {
     title: 'Top Visibility',
-    worth: 15000,
+    worth: 18000,
     note: 'Priority listing in the app',
     icon: (
       <>
@@ -42,7 +42,7 @@ const PERKS = [
   },
   {
     title: 'Onboarding & Launch',
-    worth: 24000,
+    worth: 23800,
     note: 'Setup + offline promotion',
     icon: (
       <>
@@ -55,7 +55,7 @@ const PERKS = [
   },
   {
     title: 'In-Store QR Kit',
-    worth: 11000,
+    worth: 1200,
     note: 'Counter display & stickers',
     icon: (
       <>

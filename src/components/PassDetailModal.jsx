@@ -28,29 +28,29 @@ export const PASS_DETAILS = {
         {
           name: 'Marketing',
           rows: [
-            { title: 'Premium restaurant video', desc: 'Professionally shot & edited film of your food and space.', min: 30000, max: 30000 },
-            { title: 'Local influencer reel', desc: 'A Hyderabad food creator visits and posts a reel.', min: 20000, max: 20000 },
-            { title: 'Social media & marketing support', desc: 'Posts, captions and a launch campaign for a month.', min: 20000, max: 20000 },
+            { title: 'Premium restaurant video', desc: 'Professionally shot & edited film of your food and space.', min: 33000, max: 33000 },
+            { title: 'Local influencer reel', desc: 'A Hyderabad food creator visits and posts a reel.', min: 22000, max: 22000 },
+            { title: 'Social media & marketing support', desc: 'Posts, captions and a launch campaign for a month.', min: 22000, max: 22000 },
           ],
         },
         {
           name: 'Visibility',
           rows: [
-            { title: 'Priority listing & featured campaigns', desc: 'Top placement in the app and launch campaigns.', min: 15000, max: 15000 },
+            { title: 'Priority listing & featured campaigns', desc: 'Top placement in the app and launch campaigns.', min: 18000, max: 18000 },
           ],
         },
         {
           name: 'Launch Support',
           rows: [
-            { title: 'Dedicated onboarding', desc: 'We set up your menu, staff and pickup flow.', min: 12000, max: 12000 },
-            { title: 'Offline launch marketing', desc: 'Flyers and on-ground promotion near your store.', min: 12000, max: 12000 },
+            { title: 'Dedicated onboarding', desc: 'We set up your menu, staff and pickup flow.', min: 12800, max: 12800 },
+            { title: 'Offline launch marketing', desc: 'Flyers and on-ground promotion near your store.', min: 11000, max: 11000 },
           ],
         },
         {
           name: 'In-Store Kit',
           rows: [
-            { title: 'Counter display & QR kit', desc: 'Printed standee with your ordering QR code.', min: 6000, max: 6000 },
-            { title: 'Premium window stickers', desc: 'Founding 100 window & door branding.', min: 5000, max: 5000 },
+            { title: 'Counter display & QR kit', desc: 'Printed standee with your ordering QR code.', min: 800, max: 800 },
+            { title: 'Premium window stickers', desc: 'Founding 100 window & door branding.', min: 400, max: 400 },
           ],
         },
       ],

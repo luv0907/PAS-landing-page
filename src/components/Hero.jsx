@@ -149,8 +149,16 @@ export default function Hero() {
                 <span className="sr-only">Founding Pick Stars and Founding Restaurants</span>
                 <span className="title-line title-line--pickat drop-head" aria-hidden="true">FOUNDING</span>
                 <span className="title-line title-line--store drop-head" style={{ '--d': '140ms' }} aria-hidden="true">
-                  <span className={`type-word${aud.long ? ' type-word--long' : ''}`}>{typed || '\u200b'}</span>
-                  <span className={`type-caret${typing ? ' is-typing' : ''}`} />
+                  {/* fixed-width slot (sized by the longest word) so the seal never moves */}
+                  <span className="type-slot">
+                    {AUDIENCES.map((a) => (
+                      <span key={a.word} className={`type-ghost${a.long ? ' type-word--long' : ''}`}>{a.word}</span>
+                    ))}
+                    <span className="type-live">
+                      <span className={`type-word${aud.long ? ' type-word--long' : ''}`}>{typed || '\u200b'}</span>
+                      <span className={`type-caret${typing ? ' is-typing' : ''}`} />
+                    </span>
+                  </span>
                   {/* wax seal stamped onto the top-right corner of the final S */}
                   <span
                     key={stampRun}

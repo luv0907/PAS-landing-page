@@ -2746,3 +2746,14 @@ html:not(.pas-loaded) .title-stamp, html:not(.pas-loaded) .wax-seal__banner, htm
   .torn-card { padding-top: 40px; }
   .torn-lead { font-size: 13.5px; }
 }
+
+/* typed word sits in a fixed-width slot so the wax seal stays put */
+.type-slot { display: inline-grid; justify-items: start; align-items: end; vertical-align: bottom; }
+.type-slot > * { grid-area: 1 / 1; }
+.type-ghost { visibility: hidden; white-space: nowrap; }
+.type-live { white-space: nowrap; }
+.type-live { position: relative; }
+.type-live .type-caret { position: absolute; left: 100%; bottom: 0.08em; }
+.type-slot { padding-right: 0.14em; }
+@media (max-width: 619px) { .title-promise__text { max-width: calc(100vw - 40px); } }
+.title-promise { position: relative; z-index: 3; }

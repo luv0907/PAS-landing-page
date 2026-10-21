@@ -2872,20 +2872,19 @@ html:not(.pas-loaded) .title-stamp, html:not(.pas-loaded) .wax-seal__banner, htm
   text-underline-offset: 3px;
 }
 
-/* =====================================================================
-   Keep every box inside the red area, clear of the road (left) and the
-   old-city walls (both sides). --side-clear = wall width + breathing room.
-   ===================================================================== */
-:root { --side-clear: 32px; }
-@media (min-width: 600px) { :root { --side-clear: calc(clamp(22px, 7.5vw, 46px) + 18px); } }
-@media (min-width: 900px) { :root { --side-clear: max(28px, calc(min(104px, 7.5vw) + 18px - max(0px, (100vw - 1080px) / 2))); } }
+/* backdrop keeps one height while the phone's address bar slides in/out (no jumps) */
+.pas-backdrop, .pas-frame-layer { inset: 0 0 auto 0; height: 100vh; height: 100lvh; }
+.pas-backdrop__doodles { will-change: transform; backface-visibility: hidden; }
 
-.pas-container { padding-left: max(var(--gutter), var(--side-clear)); padding-right: max(var(--gutter), var(--side-clear)); }
-.poster-inner .pass-section {
-  margin-left: max(0px, calc(var(--side-clear) - var(--gutter)));
-  margin-right: max(0px, calc(var(--side-clear) - var(--gutter)));
+/* no red box behind the registration cards — cards sit straight on the page */
+.pass-section { background: none; border: 0; box-shadow: none; border-radius: 0; padding: 0; }
+@media (max-width: 619px) {
+  .pass-section { margin-left: 0; margin-right: 0; padding: 0; }
+  .pass-card .pass-body { padding: 14px 16px 16px; }
+  .pass-card .pass-num { font-size: 60px; }
+  .pass-card .pass-title { font-size: 22px; }
+  .pass-card .btn-poster { font-size: 16px; white-space: nowrap; min-height: 52px; }
+  .pass-card .pass-tag { flex-wrap: nowrap; white-space: nowrap; font-size: 9.5px; letter-spacing: 0.06em; }
+  .pass-card .pass-tag__serial { margin-left: auto; }
+  .pass-stub__barcode { white-space: nowrap; overflow: hidden; max-width: 60%; }
 }
-@media (min-width: 760px) {
-  .poster-inner .pass-section { max-width: min(980px, calc(100% - 2 * max(0px, var(--side-clear) - var(--gutter)))); margin-left: auto; margin-right: auto; }
-}
-.map-stop__art { width: min(86vw, 520px, calc(100vw - 2 * var(--side-clear))); }

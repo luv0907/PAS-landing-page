@@ -37,7 +37,7 @@ export default function PosterBackdrop() {
   const moveTrim = () => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const { W, H } = dims.current;
-    const phase = reduce ? 0 : Math.round(window.scrollY * DOODLE_SPEED * 2) / 2;
+    const phase = reduce ? 0 : Math.round(window.scrollY * DOODLE_SPEED * 10) / 10;
     if (W && phase !== lastTrim.current) {
       lastTrim.current = phase;
       const d = buildTrim(W, H, phase);
@@ -76,7 +76,11 @@ export default function PosterBackdrop() {
       moveTrim();
     };
     draw();
+    // phones resize the viewport while the address bar slides away: ignore those
+    // small height-only changes so the frame is never torn down mid-scroll
     const ro = new ResizeObserver(() => {
+      const { W, H } = dims.current;
+      if (wrap.clientWidth === W && Math.abs(wrap.clientHeight - H) < 160) return;
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(draw);
     });
@@ -104,8 +108,8 @@ export default function PosterBackdrop() {
     const onScroll = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        const y = (window.scrollY * DOODLE_SPEED) % tile;
-        el.style.transform = `translate3d(0, ${-y}px, 0)`;
+        const y = (Math.round(window.scrollY * DOODLE_SPEED * 10) / 10) % tile;
+        el.style.transform = `translate3d(0, ${(-y).toFixed(1)}px, 0)`;
         moveTrim();
       });
     };

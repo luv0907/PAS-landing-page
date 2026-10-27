@@ -193,15 +193,15 @@ export default function MerchantAppSection() {
               <button type="button" className="perk-nav__btn" onClick={step(1)} aria-label="Next benefit">→</button>
             </div>
 
-            <div className="torn-total" aria-label={`Total worth ${inr(TOTAL)}, you pay nothing`}>
+            <div className="torn-total" aria-label={`Total worth ${inr(TOTAL)}, one-time registration fee ₹2,999`}>
               <span className="torn-total__worth">
                 <small>Total worth</small>
                 <s>{inr(TOTAL)}</s>
               </span>
               <span className="torn-total__arrow" aria-hidden="true">→</span>
               <span className="torn-total__pay">
-                <small>You pay</small>
-                <strong>₹0</strong>
+                <small>One-time <span className="torn-total__nowrap">registration fee</span></small>
+                <strong>₹2,999</strong>
               </span>
             </div>
 

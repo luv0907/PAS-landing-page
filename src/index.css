@@ -2726,6 +2726,7 @@ html:not(.pas-loaded) .title-stamp, html:not(.pas-loaded) .wax-seal__banner, htm
   font: 400 clamp(26px, 5vw, 36px)/1 var(--f-comic);
   transform: rotate(-2deg);
 }
+.torn-total__nowrap { white-space: nowrap; }
 .torn-cta { margin-top: 18px; }
 
 @media (max-width: 759px) {
@@ -2733,6 +2734,7 @@ html:not(.pas-loaded) .title-stamp, html:not(.pas-loaded) .wax-seal__banner, htm
   .perk-tile__worth { font-size: 12.5px; }
   .perk-tile__stamp { top: 6px; right: 6px; font-size: 10px; padding: 3px 5px 2px; }
   .torn-total { padding: 12px 14px; }
+  .torn-total__pay small { letter-spacing: 0.06em; }
 }
 
 /* hero promise wraps neatly on narrow phones */
